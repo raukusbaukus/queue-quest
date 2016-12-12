@@ -10,3 +10,7 @@ Level End Page: (https://wireframe.cc/JRc5IU)[https://wireframe.cc/JRc5IU]
 # Firebase
 
 (Firebase page)[https://queue-quest.firebaseapp.com]
+
+# RPG-Awesome icons
+
+Icon list (usage reference at bottom of page): (https://nagoshiashumari.github.io/Rpg-Awesome/)[https://nagoshiashumari.github.io/Rpg-Awesome/]

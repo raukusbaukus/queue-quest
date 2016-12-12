@@ -10,63 +10,117 @@
 </head>
 
 <body>
-  <header>
-    <h1>Queue Quest</h1>
-  </header>
-  <section class="matchup">
-    <div class="char-stats">
-      <h2>Hero</h2>
-      <div class="hp-bar">
-        <h3>HP</h3>
-        <progress value="16" max="20">16/20</progress>
-      </div>
-      <div class="energy-bar">
-        <h3>Energy</h3>
-        <progress value="14" max="30">14/30</progress>
-      </div>
-      <div class="base-dmg">Base Damage: 5</div>
-      <div class="armor">Armor: 5</div>
-      <div class="ward">Ward: 5</div>
-    </div>
-    <div class="hero-pic">
-      <img src="images/characters/magi.gif"/>
-    </div>
-    <div class="level-detail">
-      <h3>Level 1</h3>
-      <h3>Wave 2</h3>
-    </div>
-    <div class="monster-pic">
-      <img src="images/characters/tiefling.gif"/>
-    </div>
-    <div class="monster-stats">
-      <h2>Hero</h2>
-      <div class="m-hp-bar">
-        <h3>HP</h3>
-        <progress value="16" max="20">16/20</progress>
-      </div>
-      <div class="m-energy-bar">
-        <h3>Energy</h3>
-        <progress value="14" max="30">14/30</progress>
-      </div>
-      <div class="m-base-dmg">Base Damage: 5</div>
-      <div class="m-armor">Armor: 5</div>
-      <div class="m-ward">Ward: 5</div>
-    </div>
-  </section>
-  <section class="initiation">
-    <form id="initiate-options" class="initite-options">
-      <h3>Initiation Ability:</h3>
-      <label for="cb-analyze"><input type="checkbox" id="cb-analyze" value="">Analyze</label>
-      <label for="cb-heal"><input type="checkbox" id="cb-heal" value="">Heal</label>
-      <label for="cb-rest"><input type="checkbox" id="cb-rest" value="">Rest</label>
-      <label for="cb-repair"><input type="checkbox" id="cb-repair" value="">Repair</label>
-      <label for="cb-protect"><input type="checkbox" id="cb-protect" value="">Protect</label>
-      <button id="init-submit" class="init-submit" type="button" name="button">Initiate!</button>
-    </form>
-  </section>
-  <section class="encounter-rounds">
-    <i class="ra ra-sword ra-lg"></i>
-  </section>
+    <header>
+        <h1>Queue Quest</h1>
+    </header>
+    <section class="matchup">
+        <div class="char-stats">
+            <h2>Hero</h2>
+            <div class="hp-bar">
+                <h3>HP</h3>
+                <progress value="16" max="20">16/20</progress>
+            </div>
+            <div class="energy-bar">
+                <h3>Energy</h3>
+                <progress value="14" max="30">14/30</progress>
+            </div>
+            <div class="base-dmg">Base Damage: 5</div>
+            <div class="armor">Armor: 5</div>
+            <div class="ward">Ward: 5</div>
+        </div>
+        <div class="hero-pic">
+            <img src="images/characters/magi.gif" />
+        </div>
+        <div class="level-detail">
+            <h3>Level 1</h3>
+            <h3>Wave 2</h3>
+        </div>
+        <div class="monster-pic">
+            <img src="images/characters/tiefling.gif" />
+        </div>
+        <div class="monster-stats">
+            <h2>Hero</h2>
+            <div class="m-hp-bar">
+                <h3>HP</h3>
+                <progress value="16" max="20">16/20</progress>
+            </div>
+            <div class="m-energy-bar">
+                <h3>Energy</h3>
+                <progress value="14" max="30">14/30</progress>
+            </div>
+            <div class="m-base-dmg">Base Damage: 5</div>
+            <div class="m-armor">Armor: 5</div>
+            <div class="m-ward">Ward: 5</div>
+        </div>
+    </section>
+    <section class="initiation">
+        <form id="initiate-options" class="initite-options">
+            <h3>Initiation Ability:</h3>
+            <label for="cb-analyze"><input type="checkbox" id="cb-analyze" value=""> <i class="ra ra-aware ra-lg"></i> Analyze</label>
+            <label for="cb-heal"><input type="checkbox" id="cb-heal" value=""> <i class="ra ra-health ra-lg"></i> Heal</label>
+            <label for="cb-rest"><input type="checkbox" id="cb-rest" value=""> <i class="ra ra-chicken-leg ra-lg"></i> Energize</label>
+            <label for="cb-repair"><input type="checkbox" id="cb-repair" value=""> <i class="ra ra-forging ra-lg"></i> Repair</label>
+            <label for="cb-protect"><input type="checkbox" id="cb-protect" value=""> <i class="ra ra-aura ra-lg"></i> Protect</label>
+            <button id="init-submit" class="init-submit" type="button" name="init-button">Initiate!</button>
+        </form>
+    </section>
+    <section class="encounter-rounds">
+        <div class="round1h">
+            <i class="ra ra-sword ra-3x"></i>
+        </div>
+        <div class="round1m">
+            <i class="ra ra-cancel ra-3x"></i>
+        </div>
+        <div class="round2h">
+            <i class="ra ra-shield ra-3x"></i>
+        </div>
+        <div class="round2m">
+            <i class="ra ra-cancel ra-3x"></i>
+        </div>
+        <div class="round3h">
+            <i class="ra ra-archer ra-3x"></i>
+        </div>
+        <div class="round3m">
+            <i class="ra ra-cancel ra-3x"></i>
+        </div>
+        <div class="round4h">
+            <i class="ra ra-small-fire ra-3x"></i>
+        </div>
+        <div class="round4m">
+            <i class="ra ra-cancel ra-3x"></i>
+        </div>
+        <div class="round5h">
+            <i class="ra ra-sword ra-3x"></i>
+        </div>
+        <div class="round5m">
+            <i class="ra ra-cancel ra-3x"></i>
+        </div>
+    </section>
+    <section class="ability-select">
+        <h3>Known Abilities:</h3>
+        <div class="abil1">
+            <i class="ra ra-sword ra-3x"></i>
+        </div>
+        <div class="abil2">
+            <i class="ra ra-sword ra-3x"></i>
+        </div>
+        <div class="abil3">
+            <i class="ra ra-sword ra-3x"></i>
+        </div>
+        <div class="abil4">
+            <i class="ra ra-sword ra-3x"></i>
+        </div>
+        <div class="abil5">
+            <i class="ra ra-sword ra-3x"></i>
+        </div>
+        <div class="abil6">
+            <i class="ra ra-sword ra-3x"></i>
+        </div>
+        <button id="encounter-lockin" class="encounter-lockin" type="button" name="lockin-button">Finalize and Begin Encounter</button>
+    </section>
+    <section class="context">
+        <button id="context-button" class="context-button" type="button" name="context-button">Next Encounter</button>
+    </section>
 </body>
 
 </html>
