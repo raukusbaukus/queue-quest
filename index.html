@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <script src="scripts.js" charset="utf-8" defer></script>
-    <link rel="stylesheet" href="styles.css">
+    <script src="scripts/scripts.js" charset="utf-8" defer></script>
+    <link rel="stylesheet" href="styles/styles.css">
     <title>Queue Quest</title>
 </head>
 
@@ -12,6 +12,57 @@
   <header>
     <h1>Queue Quest</h1>
   </header>
+  <section class="matchup">
+    <div class="char-stats">
+      <h2>Hero</h2>
+      <div class="hp-bar">
+        <h3>HP</h3>
+        <progress value="16" max="20">16/20</progress>
+      </div>
+      <div class="energy-bar">
+        <h3>Energy</h3>
+        <progress value="14" max="30">14/30</progress>
+      </div>
+      <div class="base-dmg">Base Damage: 5</div>
+      <div class="armor">Armor: 5</div>
+      <div class="ward">Ward: 5</div>
+    </div>
+    <div class="hero-pic">
+      <img src="images/magi.gif"/>
+    </div>
+    <div class="level-detail">
+      <h3>Level 1</h3>
+      <h3>Wave 2</h3>
+    </div>
+    <div class="monster-pic">
+      <img src="images/tiefling.gif"/>
+    </div>
+    <div class="monster-stats">
+      <h2>Hero</h2>
+      <div class="m-hp-bar">
+        <h3>HP</h3>
+        <progress value="16" max="20">16/20</progress>
+      </div>
+      <div class="m-energy-bar">
+        <h3>Energy</h3>
+        <progress value="14" max="30">14/30</progress>
+      </div>
+      <div class="m-base-dmg">Base Damage: 5</div>
+      <div class="m-armor">Armor: 5</div>
+      <div class="m-ward">Ward: 5</div>
+    </div>
+  </section>
+  <section class="initiation">
+    <form id="initiate-options" class="initite-options">
+      <h3>Initiation Ability:</h3>
+      <label for="cb-analyze"><input type="checkbox" id="cb-analyze" value="">Analyze</label>
+      <label for="cb-heal"><input type="checkbox" id="cb-heal" value="">Heal</label>
+      <label for="cb-rest"><input type="checkbox" id="cb-rest" value="">Rest</label>
+      <label for="cb-repair"><input type="checkbox" id="cb-repair" value="">Repair</label>
+      <label for="cb-protect"><input type="checkbox" id="cb-protect" value="">Protect</label>
+      <button id="init-submit" class="init-submit" type="button" name="button">Initiate!</button>
+    </form>
+  </section>
 </body>
 
 </html>
