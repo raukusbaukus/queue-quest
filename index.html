@@ -7,6 +7,7 @@
     <script src="scripts/scripts.js" charset="utf-8" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.0/build/pure-min.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.0/build/grids-responsive-min.css">
     <link rel="stylesheet" href="rpg-awesome/css/rpg-awesome.css" />
     <link rel="stylesheet" href="styles/styles.css" />
     <title>Queue Quest</title>
@@ -16,61 +17,78 @@
     <header>
         <h1>Queue Quest</h1>
     </header>
-    <section class="matchup">
-        <div class="char-stats">
-            <h2>Hero</h2>
-            <div class="hp-bar">
-                <h3>HP</h3>
-                <div class="meter">
-                    <span style="width: 25%"></span>
+    <section class="hud">
+        <div class="pure-g">
+            <div class="pure-u-1-4">
+                <div class="char-stats">
+                    <h2>Hero</h2>
+                    <div class="hp-bar">
+                        <h3>HP</h3>
+                        <div class="meter">
+                            <span style="width: 25%"></span>
+                        </div>
+                    </div>
+                    <div class="energy-bar">
+                        <h3>Energy</h3>
+                        <div class="meter orange">
+                            <span style="width: 25%"></span>
+                        </div>
+                    </div>
+                    <div class="base-dmg">Base Damage: 5</div>
+                    <div class="armor">Armor: 5</div>
+                    <div class="ward">Ward: 5</div>
                 </div>
             </div>
-            <div class="energy-bar">
-                <h3>Energy</h3>
-                <div class="meter orange">
-                    <span style="width: 25%"></span>
+            <div class="pure-u-1-2">
+                <div class="matchup">
+                    <div class="hero-pic">
+                        <img class="illus" src="images/characters/magi.gif" />
+                    </div>
+                    <div class="level-detail">
+                        VS
+                    </div>
+                    <div class="monster-pic">
+                        <img class="illus" src="images/characters/tiefling.gif" />
+                    </div>
                 </div>
             </div>
-            <div class="base-dmg">Base Damage: 5</div>
-            <div class="armor">Armor: 5</div>
-            <div class="ward">Ward: 5</div>
-        </div>
-        <div class="hero-pic">
-            <img src="images/characters/magi.gif" />
-        </div>
-        <div class="level-detail">
-            <h3>Level 1</h3>
-            <h3>Wave 2</h3>
-        </div>
-        <div class="monster-pic">
-            <img src="images/characters/tiefling.gif" />
-        </div>
-        <div class="monster-stats">
-            <h2>Monster</h2>
-            <div class="m-hp-bar">
-                <h3>HP</h3>
-                <progress value="16" max="20">16/20</progress>
+            <div class="pure-u-1-4">
+                <div class="monster-stats">
+                    <h2>Monster</h2>
+                    <div class="m-hp-bar">
+                        <h3>HP</h3>
+                        <div class="meter orange">
+                            <span style="width: 25%"></span>
+                        </div>
+                    </div>
+                    <div class="m-energy-bar">
+                        <h3>Energy</h3>
+                        <div class="meter">
+                            <span style="width: 25%"></span>
+                        </div>
+                    </div>
+                    <div class="base-dmg">Base Damage: 5</div>
+                    <div class="armor">Armor: 5</div>
+                    <div class="ward">Ward: 5</div>
+                </div>
             </div>
-            <div class="m-energy-bar">
-                <h3>Energy</h3>
-                <progress value="14" max="30">14/30</progress>
-            </div>
-            <div class="m-base-dmg">Base Damage: 5</div>
-            <div class="m-armor">Armor: 5</div>
-            <div class="m-ward">Ward: 5</div>
+
+    </section>
+    <div class="pure-g">
+        <div class="pure-u-2-3">
+            <section class="initiation">
+                <form id="initiate-options" class="pure-form">
+                    <h3>Initiation Ability:</h3>
+                    <label for="rb-analyze"><input type="radio" id="rb-analyze" value="analyze" name="init-group"> <i class="ra ra-aware ra-lg"></i> Analyze</label>
+                    <label for="rb-heal"><input type="radio" id="rb-heal" value="heal"  name="init-group"> <i class="ra ra-health ra-lg"></i> Heal</label>
+                    <label for="rb-energize"><input type="radio" id="rb-energize" value="energize"  name="init-group"> <i class="ra ra-chicken-leg ra-lg"></i> Energize</label>
+                    <label for="rb-repair"><input type="radio" id="rb-repair" value="repair"  name="init-group"> <i class="ra ra-forging ra-lg"></i> Repair</label>
+                    <label for="rb-protect"><input type="radio" id="rb-protect" value="protect"  name="init-group"> <i class="ra ra-aura ra-lg"></i> Protect</label>
+                    <button id="init-submit" class="pure-button pure-button-primary" type="button" name="init-button">Initiate!</button>
+                </form>
+            </section>
         </div>
-    </section>
-    <section class="initiation">
-        <form id="initiate-options" class="pure-form">
-            <h3>Initiation Ability:</h3>
-            <label for="rb-analyze"><input type="radio" id="rb-analyze" value="analyze" name="init-group"> <i class="ra ra-aware ra-lg"></i> Analyze</label>
-            <label for="rb-heal"><input type="radio" id="rb-heal" value="heal"  name="init-group"> <i class="ra ra-health ra-lg"></i> Heal</label>
-            <label for="rb-energize"><input type="radio" id="rb-energize" value="energize"  name="init-group"> <i class="ra ra-chicken-leg ra-lg"></i> Energize</label>
-            <label for="rb-repair"><input type="radio" id="rb-repair" value="repair"  name="init-group"> <i class="ra ra-forging ra-lg"></i> Repair</label>
-            <label for="rb-protect"><input type="radio" id="rb-protect" value="protect"  name="init-group"> <i class="ra ra-aura ra-lg"></i> Protect</label>
-            <button id="init-submit" class="pure-button pure-button-primary" type="button" name="init-button">Initiate!</button>
-        </form>
-    </section>
+    </div>
     <section class="encounter-rounds">
         <div class="round1h">
             <i class="ra ra-sword ra-3x"></i>
