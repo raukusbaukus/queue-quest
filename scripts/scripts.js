@@ -6,8 +6,9 @@ var tooltipinfo = {
 
 var tooltiparr = [];
 
-
 var heroinfo = {
+  name: '',
+  illus: 'images/characters/magi.gif',
   maxhp: 30,
   currhp: 30,
   maxenergy: 20,
@@ -19,11 +20,27 @@ var heroinfo = {
   currarmor: 1,
   maxward: 0,
   currward: 0,
-  name: '',
-  illus: 'images/characters/magi.gif',
   initabils: [],
   abils: []
 };
+
+var monsterarr = [{
+  name: 'Tiefling',
+  illus: 'images/characters/tiefling.gif',
+  maxhp: 15,
+  currhp: 15,
+  maxenergy: 20,
+  currenergy: 20,
+  dtype: 'Physical',
+  basedmg: 5,
+  dmgvariance: [1, 3],
+  maxarmor: 0,
+  currarmor: 0,
+  maxward: 0,
+  currward: 0,
+  abilqueue: [],
+}];
+
 
 $(document).ready(function(event) {
   tooltiparr = [$('#warpick'), $('#ranpick'), $('#magpick')];
@@ -76,7 +93,8 @@ function heropicked() {
   }
   heroinfo['illus'] = this.src;
   heroinfo['name'] = this.name;
-  sethstats(heroinfo);
+  sethstats();
+  setmstats(monsterarr[0]); //temporary monster initialization
 }
 
 function sethstats() {
@@ -104,5 +122,29 @@ function sethstats() {
   $('label').css('display', 'none');
   for (let inits in heroinfo['initabils']) {
     $('#l' + heroinfo['initabils'][inits]).css('display', 'inline-block');
+  }
+}
+
+function setmstats(monsterinfo) {
+  //updates monsters's stat displays
+  $('#monster-pic').prop('src', monsterinfo['illus']);
+  $('#monster-name').text(monsterinfo['name']);
+  $('#mhp').text(`HP: ${monsterinfo['currhp']}/${monsterinfo['maxhp']}`);
+  $('#mhpbar').prop('style', `width: ${Math.floor(monsterinfo['currhp']/monsterinfo['maxhp'])}`)
+  $('#menergy').text(`Energy: ${monsterinfo['currenergy']}/${monsterinfo['maxenergy']}`);
+  $('#menergybar').prop('style', `width: ${Math.floor(monsterinfo['currenergy']/monsterinfo['maxenergy'])}`)
+  $('#mdmg').text(`Damage: ${monsterinfo['basedmg']}+${monsterinfo['dmgvariance'][0]}d${monsterinfo['dmgvariance'][1]}`);
+  $('#mtype').text(`Type: ${monsterinfo['dtype']}`);
+  if (monsterinfo['maxarmor'] === monsterinfo['currarmor']) {
+    $('#marmor').text(`Armor: ${monsterinfo['currarmor']}`);
+  } else {
+    $('#marmor').text(`Armor: ${monsterinfo['currarmor']}/${monsterinfo['maxarmor']}`);
+  }
+  if (monsterinfo['maxward'] === 0) {
+    $('#mward').text(``);
+  } else if (monsterinfo['maxward'] === monsterinfo['currward']) {
+    $('#mward').text(`Ward: ${monsterinfo['currward']}`);
+  } else {
+    $('#mward').text(`Ward: ${monsterinfo['currward']}/${monsterinfo['maxward']}`);
   }
 }
