@@ -186,19 +186,24 @@ label {
 }
 
 .tooltip {
+    zindex: 5000;
+    max-width: 50%;
     position: absolute;
     display: none;
-    border: 2px;
+    border: 1px;
     border-style: solid;
     border-color: black;
-    background-color: #8B9BB2;
+    background-color: #E8D1A3;
     margin: .6em;
     text-align: center;
-    padding-bottom: 1em;
+    padding: .3em;
     border-radius: 5px;
-    box-shadow: inset -3px -3px 4px rgba(53, 72, 99, 0.6);
+    box-shadow: inset -1px -1px 2px rgba(135, 113, 68, 0.6);
 }
 
+#hhpbar, #henergybar, #mhpbar, #menergybar {
+  z-index: 0;
+}
 
 }
 .pure-u-5-6, #round1h, #round2h, #round3h, #round4h, #round5h, #round1m, #round2m, #round3m, #round4m, #round5m {
