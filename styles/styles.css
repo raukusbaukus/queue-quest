@@ -43,7 +43,10 @@
   display: flex;
 }
 .level-detail {
-  margin-top: 4em;
+  text-shadow: .05em .05em .1em black;
+  color: #DDE975;
+  font-size: 1.5em;
+  margin-top: 2em;
   text-align: center;
   max-width: 10%;
 }
@@ -56,16 +59,23 @@
 .char-stats, .monster-stats {
   background-color: #E8D1A3;
   padding: .5em;
+  border-width: 1px;
+  border-style: solid;
+  border-color: black;
+  border-radius: 5px;
+  box-shadow: inset -3px -3px 5px rgba(135, 113, 68, 0.6);
+}
+
+header {
+  text-align: center;
+  margin: .2em;
 }
 
 header h1 {
-  text-align: center;
-  margin: .2em;
   text-shadow: .05em .05em .1em black;
-  color: #22B531;
-}
-h1 {
+  color: #1060EA;
   font-size: 3em;
+  margin: 0;
 }
 h2, h3, p {
   margin: 0.2em;
@@ -76,14 +86,20 @@ h2, h3, p {
 }
 
 body {
+  justify-content: center;
   background-color: #eee;
+  background-image: url("../images/bg/fantasy-landscape.jpg");
 }
 
-.hud {
+.hud, .encounter-rounds {
+  margin: .5em;
   background-color: #2e8b57;
-  border-radius: .2em;
+  border-width: 2px;
   border-style: solid;
   border-color: black;
+  padding: .5em;
+  border-radius: 5px;
+  box-shadow: inset -3px -3px 4px rgba(6, 51, 26, 0.6);
 }
 
 .base-dmg, .armor, .ward {
@@ -91,18 +107,70 @@ body {
   padding-top: .3em;
 }
 
-.pure-u-2-3 {
-  align-content: space-around;
-}
-
-.initiation {
-  border: 1px;
+#initiate-options {
+  border: 2px;
   border-style: solid;
   border-color: black;
   background-color: #8B9BB2;
   margin: .6em;
   text-align: center;
-  /*-moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;*/
+  padding-bottom: 1em;
+  border-radius: 5px;
+  box-shadow: inset -3px -3px 4px rgba(53, 72, 99, 0.6);
+}
+
+label {
+  display: inline-block;
+  border: 1px;
+  border-style: solid;
+  border-color: black;
+  background-color: #ccc;
+  padding: 3px;
+  margin: 4px;
+  border-radius: 3px;
+  box-shadow: inset -1px -1px 1px rgba(50, 50, 50, 0.6);
+}
+
+#init-submit {
+  /*align-self: center;*/
+}
+
+.pure-u-5-6 {
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: black;
+}
+
+.known-abilities {
+  display:flex;
+  border: 2px;
+  border-style: solid;
+  border-color: black;
+  background-color: #8B9BB2;
+  border-radius: 5px;
+  box-shadow: inset -3px -3px 4px rgba(53, 72, 99, 0.6);
+  margin: .6em;
+  text-align: center;
+  padding: .5em;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.abil-box {
+  background-color: #aaa;
+  border-width: 1px;
+  border-style: solid;
+  border-color: black;
+  border-radius: 5px;
+  padding: 2px;
+  box-shadow: inset -1px -1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.pure-u-5-6, #round1h, #round2h, #round3h, #round4h, #round5h, #round1m, #round2m, #round3m, #round4m, #round5m {
+  /*
+  these margins/padding break the layout but are needed to un-crowd the elements.
+  margin: .2em;
+  padding: .2em;*/
+
 }

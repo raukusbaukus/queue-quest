@@ -15,7 +15,9 @@
 
 <body>
     <header>
+        <i class="ra ra-castle-flag ra-lg"></i><i class="ra ra-helmet ra-3x"></i><i class="ra ra-castle-flag ra-lg"></i>
         <h1>Queue Quest</h1>
+        <i class="ra ra-skull-trophy ra-lg"></i><i class="ra ra-monster-skull ra-3x"></i><i class="ra ra-skull-trophy ra-lg"></i>
     </header>
     <section class="hud">
         <div class="pure-g">
@@ -57,13 +59,13 @@
                     <h2>Monster</h2>
                     <div class="m-hp-bar">
                         <h3>HP</h3>
-                        <div class="meter orange">
+                        <div class="meter">
                             <span style="width: 25%"></span>
                         </div>
                     </div>
                     <div class="m-energy-bar">
                         <h3>Energy</h3>
-                        <div class="meter">
+                        <div class="meter orange">
                             <span style="width: 25%"></span>
                         </div>
                     </div>
@@ -72,11 +74,13 @@
                     <div class="ward">Ward: 5</div>
                 </div>
             </div>
-
+        </div>
     </section>
-    <div class="pure-g">
-        <div class="pure-u-2-3">
-            <section class="initiation">
+    <section class="initiation">
+        <div class="pure-g">
+            <div class="pure-u-1-6">
+            </div>
+            <div class="pure-u-2-3">
                 <form id="initiate-options" class="pure-form">
                     <h3>Initiation Ability:</h3>
                     <label for="rb-analyze"><input type="radio" id="rb-analyze" value="analyze" name="init-group"> <i class="ra ra-aware ra-lg"></i> Analyze</label>
@@ -84,64 +88,120 @@
                     <label for="rb-energize"><input type="radio" id="rb-energize" value="energize"  name="init-group"> <i class="ra ra-chicken-leg ra-lg"></i> Energize</label>
                     <label for="rb-repair"><input type="radio" id="rb-repair" value="repair"  name="init-group"> <i class="ra ra-forging ra-lg"></i> Repair</label>
                     <label for="rb-protect"><input type="radio" id="rb-protect" value="protect"  name="init-group"> <i class="ra ra-aura ra-lg"></i> Protect</label>
-                    <button id="init-submit" class="pure-button pure-button-primary" type="button" name="init-button">Initiate!</button>
                 </form>
-            </section>
-        </div>
-    </div>
-    <section class="encounter-rounds">
-        <div class="round1h">
-            <i class="ra ra-sword ra-3x"></i>
-        </div>
-        <div class="round1m">
-            <i class="ra ra-cancel ra-3x"></i>
-        </div>
-        <div class="round2h">
-            <i class="ra ra-shield ra-3x"></i>
-        </div>
-        <div class="round2m">
-            <i class="ra ra-cancel ra-3x"></i>
-        </div>
-        <div class="round3h">
-            <i class="ra ra-archer ra-3x"></i>
-        </div>
-        <div class="round3m">
-            <i class="ra ra-cancel ra-3x"></i>
-        </div>
-        <div class="round4h">
-            <i class="ra ra-small-fire ra-3x"></i>
-        </div>
-        <div class="round4m">
-            <i class="ra ra-cancel ra-3x"></i>
-        </div>
-        <div class="round5h">
-            <i class="ra ra-sword ra-3x"></i>
-        </div>
-        <div class="round5m">
-            <i class="ra ra-cancel ra-3x"></i>
+            </div>
+            <div class="pure-u-1-6">
+            </div>
+            <button id="init-submit" class="pure-button pure-button-primary" type="button" name="init-button">Initiate!</button>
         </div>
     </section>
+    <section class="encounter-rounds">
+        <div class="pure-g">
+            <div class="pure-u-11-24">
+                <div class="hrounds">
+                    <div class="pure-g">
+                        <div class="pure-u-1-6" id="round1h">
+                            <i class="ra ra-sword ra-3x abil-box"></i>
+                        </div>
+                        <div class="pure-u-5-6">
+                        </div>
+                        <div class="pure-u-1-6" id="round2h">
+                            <i class="ra ra-shield ra-3x abil-box"></i>
+                        </div>
+                        <div class="pure-u-5-6">
+                        </div>
+                        <div class="pure-u-1-6" id="round3h">
+                            <i class="ra ra-archer ra-3x abil-box"></i>
+                        </div>
+                        <div class="pure-u-5-6">
+                        </div>
+                        <div class="pure-u-1-6" id="round4h">
+                            <i class="ra ra-small-fire ra-3x abil-box"></i>
+                        </div>
+                        <div class="pure-u-5-6">
+                        </div>
+                        <div class="pure-u-1-6" id="round5h">
+                            <i class="ra ra-sword ra-3x abil-box"></i>
+                        </div>
+                        <div class="pure-u-5-6">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pure-u-1-24">
+            </div>
+            <div class="pure-u-11-24">
+                <div class="mrounds">
+                    <div class="pure-g">
+                        <div class="pure-u-5-6">
+                        </div>
+                        <div class="pure-u-1-6" id="round1m">
+                            <i class="ra ra-uncertainty ra-3x abil-box"></i>
+                        </div>
+                        <div class="pure-u-5-6">
+                        </div>
+                        <div class="pure-u-1-6" id="round2m">
+                            <i class="ra ra-uncertainty ra-3x abil-box"></i>
+                        </div>
+                        <div class="pure-u-5-6">
+                        </div>
+                        <div class="pure-u-1-6" id="round3m">
+                            <i class="ra ra-uncertainty ra-3x abil-box"></i>
+                        </div>
+                        <div class="pure-u-5-6">
+                        </div>
+                        <div class="pure-u-1-6" id="round4m">
+                            <i class="ra ra-uncertainty ra-3x abil-box"></i>
+                        </div>
+                        <div class="pure-u-5-6">
+                        </div>
+                        <div class="pure-u-1-6" id="round5m">
+                            <i class="ra ra-uncertainty ra-3x abil-box"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
     <section class="ability-select">
-        <h3>Known Abilities:</h3>
-        <div class="abil1">
-            <i class="ra ra-sword ra-3x"></i>
+        <div class="pure-g">
+            <div class="pure-u-1-6">
+            </div>
+            <div class="pure-u-2-3">
+                <div class="known-abilities">
+                    <h3>Known Abilities:</h3>
+                    <div class="abil1">
+                        <i class="ra ra-sword ra-3x abil-box"></i>
+                    </div>
+                    <div class="abil2">
+                        <i class="ra ra-sword ra-3x abil-box"></i>
+                    </div>
+                    <div class="abil3">
+                        <i class="ra ra-sword ra-3x abil-box"></i>
+                    </div>
+                    <div class="abil4">
+                        <i class="ra ra-sword ra-3x abil-box"></i>
+                    </div>
+                    <div class="abil5">
+                        <i class="ra ra-sword ra-3x abil-box"></i>
+                    </div>
+                    <div class="abil6">
+                        <i class="ra ra-sword ra-3x abil-box"></i>
+                    </div>
+                    <div class="abil6">
+                        <i class="ra ra-sword ra-3x abil-box"></i>
+                    </div>
+                    <div class="abil6">
+                        <i class="ra ra-sword ra-3x abil-box"></i>
+                    </div>
+                    <div class="abil6">
+                        <i class="ra ra-sword ra-3x abil-box"></i>
+                    </div>
+                    <div class="pure-u-1-6">
+                    </div>
+                </div>
+            </div>
+            <button id="encounter-lockin" class="pure-button pure-button-primary" type="button" name="lockin-button">Finalize and Begin Encounter</button>
         </div>
-        <div class="abil2">
-            <i class="ra ra-sword ra-3x"></i>
-        </div>
-        <div class="abil3">
-            <i class="ra ra-sword ra-3x"></i>
-        </div>
-        <div class="abil4">
-            <i class="ra ra-sword ra-3x"></i>
-        </div>
-        <div class="abil5">
-            <i class="ra ra-sword ra-3x"></i>
-        </div>
-        <div class="abil6">
-            <i class="ra ra-sword ra-3x"></i>
-        </div>
-        <button id="encounter-lockin" class="pure-button pure-button-primary" type="button" name="lockin-button">Finalize and Begin Encounter</button>
     </section>
     <section class="context">
         <button id="context-button" class="pure-button pure-button-primary" type="button" name="context-button">Next Encounter</button>
