@@ -122,7 +122,8 @@ body {
 }
 
 label {
-    display: inline-block;
+  display: none;
+    /*display: inline-block;*/
     border: 1px;
     border-style: solid;
     border-color: black;
