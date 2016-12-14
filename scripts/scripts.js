@@ -133,8 +133,6 @@ function sethstats() {
     for (let abilobjs in abilityarr) {
       if (heroinfo['abils'][abils] === abilityarr[abilobjs].name) {
         $('#a' + abilityarr[abilobjs].name).css('display', 'inline');
-        console.log($('#a' + abilityarr[abilobjs].name));
-        //something like $('#l' + heroinfo['initabils'][inits]).css('display', 'inline-block');
       }
     }
   }

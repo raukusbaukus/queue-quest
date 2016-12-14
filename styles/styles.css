@@ -161,13 +161,28 @@ label {
 }
 
 .abil-box {
-    background-color: #ccc;
     border-width: 1px;
     border-style: solid;
     border-color: black;
     border-radius: 5px;
     padding: 2px;
     box-shadow: inset -1px -1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.abil-box:hover {
+  box-shadow: inset 3px 3px 4px rgba(225, 255, 255, 1);
+}
+
+.un-abil, .ra-uncertainty {
+  background-color: #c6c19d;
+}
+
+.phys-abil {
+  background-color: #abc69d;
+}
+
+.mag-abil {
+  background-color: #b29dc6;
 }
 
 .intro {
