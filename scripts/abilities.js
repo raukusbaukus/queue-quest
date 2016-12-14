@@ -1,6 +1,7 @@
 const abilityarr = [{
   name: 'Attack',
   type: 'Untyped',
+  icon: 'ra-sword',
   tier: 0,
   bonushp: 0,
   bonusenergy: 0,
@@ -33,6 +34,7 @@ const abilityarr = [{
 }, {
   name: 'Armor-Break',
   type: 'Physical',
+  icon: 'ra-broken-shield',
   tier: 1,
   bonushp: 1,
   bonusenergy: 1,
@@ -65,6 +67,7 @@ const abilityarr = [{
 }, {
   name: 'Block',
   type: 'Physical',
+  icon: 'ra-shield',
   tier: 0,
   bonushp: 2,
   bonusenergy: 0,
@@ -97,6 +100,7 @@ const abilityarr = [{
 }, {
   name: 'Cleanse',
   type: 'Magical',
+  icon: 'ra-circle-of-circles',
   tier: 2,
   bonushp: 2,
   bonusenergy: 0,
@@ -130,6 +134,7 @@ const abilityarr = [{
 }, {
   name: 'Cold-Snap',
   type: 'Magical',
+  icon: 'ra-frozen-arrow',
   tier: 1,
   bonushp: 1,
   bonusenergy: 0,
@@ -162,6 +167,7 @@ const abilityarr = [{
 }, {
   name: 'Combo',
   type: 'Physical',
+  icon: 'ra-dervish-swords',
   tier: 1,
   bonushp: 1,
   bonusenergy: 1,
@@ -194,6 +200,7 @@ const abilityarr = [{
 }, {
   name: 'Counter-Attack',
   type: 'Physical',
+  icon: 'ra-axe-swing',
   tier: 2,
   bonushp: 0,
   bonusenergy: 0,
@@ -227,6 +234,7 @@ const abilityarr = [{
 }, {
   name: 'Curse',
   type: 'Magical',
+  icon: 'ra-bleeding-eye',
   tier: 2,
   bonushp: 2,
   bonusenergy: 0,
@@ -259,6 +267,7 @@ const abilityarr = [{
 }, {
   name: 'Dodge',
   type: 'Physical',
+  icon: 'ra-player-dodge',
   tier: 2,
   bonushp: 1,
   bonusenergy: 1,
@@ -291,6 +300,7 @@ const abilityarr = [{
 }, {
   name: 'Doom',
   type: 'Magical',
+  icon: 'ra-death-skull',
   tier: 4,
   bonushp: 0,
   bonusenergy: 1,
@@ -323,6 +333,7 @@ const abilityarr = [{
 }, {
   name: 'Drain-Life',
   type: 'Magical',
+  icon: 'ra-defibrilate',
   tier: 3,
   bonushp: 1,
   bonusenergy: 1,
@@ -356,6 +367,7 @@ const abilityarr = [{
 }, {
   name: 'Feint',
   type: 'Physical',
+  icon: 'ra-overhead',
   tier: 2,
   bonushp: 1,
   bonusenergy: 1,
@@ -388,6 +400,7 @@ const abilityarr = [{
 }, {
   name: 'Finisher',
   type: 'Physical',
+  icon: 'ra-scythe',
   tier: 4,
   bonushp: 1,
   bonusenergy: 1,
@@ -420,6 +433,7 @@ const abilityarr = [{
 }, {
   name: 'Flame-Wave',
   type: 'Magical',
+  icon: 'ra-heavy-fall',
   tier: 2,
   bonushp: 0,
   bonusenergy: 1,
@@ -453,6 +467,7 @@ const abilityarr = [{
 }, {
   name: 'Lightning-Bolt',
   type: 'Magical',
+  icon: 'ra-focused-lightning',
   tier: 1,
   bonushp: 0,
   bonusenergy: 1,
@@ -485,6 +500,7 @@ const abilityarr = [{
 }, {
   name: 'Mote-of-Fire',
   type: 'Magical',
+  icon: 'ra-burning-embers',
   tier: 0,
   bonushp: 1,
   bonusenergy: 1,
@@ -517,6 +533,7 @@ const abilityarr = [{
 }, {
   name: 'Opening-Volley',
   type: 'Physical',
+  icon: 'ra-archer',
   tier: 1,
   bonushp: 0,
   bonusenergy: 1,
@@ -549,6 +566,7 @@ const abilityarr = [{
 }, {
   name: 'Overpower',
   type: 'Physical',
+  icon: 'ra-muscle-up',
   tier: 3,
   bonushp: 1,
   bonusenergy: 0,
@@ -581,6 +599,7 @@ const abilityarr = [{
 }, {
   name: 'Piercing-Strike',
   type: 'Physical',
+  icon: 'ra-grappling-hook',
   tier: 3,
   bonushp: 0,
   bonusenergy: 1,
@@ -613,6 +632,7 @@ const abilityarr = [{
 }, {
   name: 'Silence',
   type: 'Magical',
+  icon: 'ra-speech-bubble',
   tier: 2,
   bonushp: 0,
   bonusenergy: 2,
@@ -646,6 +666,7 @@ const abilityarr = [{
 }, {
   name: 'Spell-Break',
   type: 'Magical',
+  icon: 'ra-player-pain',
   tier: 2,
   bonushp: 1,
   bonusenergy: 0,
@@ -678,6 +699,7 @@ const abilityarr = [{
 }, {
   name: 'Turn',
   type: 'Magical',
+  icon: 'ra-ankh',
   tier: 2,
   bonushp: 1,
   bonusenergy: 1,
@@ -711,6 +733,7 @@ const abilityarr = [{
 }, {
   name: 'Venom-Strike',
   type: 'Physical',
+  icon: 'ra-dripping-knife',
   tier: 2,
   bonushp: 0,
   bonusenergy: 2,
@@ -740,6 +763,12 @@ const abilityarr = [{
   preflect: 0,
   mreflect: 0,
   usagelimit: 0,
+}, {
+  name: 'defaulth',
+  icon: 'ra-medical-pack',
+}, {
+  name: 'defaultm',
+  icon: 'ra-uncertainty',
 }];
 
 const initabilityarr = [{
@@ -902,6 +931,6 @@ const initabilityarr = [{
     menergymultiplier: 1,
     mbaseshrink: 1,
     mvarianceshrink: 1
-  },
+  }
 
 ];

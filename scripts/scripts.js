@@ -9,8 +9,11 @@ var displayabils = [];
 var heldabil = '';
 var droparr = [];
 var dropwidth = 0;
-var habilarr = ['','','','',''];
-var mabilarr = ['','','','',''];
+var habilarr = ['', '', '', '', ''];
+var mabilarr = ['', '', '', '', ''];
+var dhabilarr = ['defaulth', 'defaulth', 'defaulth', 'defaulth', 'defaulth'];
+var analyzed = ['defaultm', 'defaultm', 'defaultm', 'defaultm', 'defaultm'];
+var analyzebool = false;
 
 var heroinfo = {
   name: '',
@@ -31,21 +34,24 @@ var heroinfo = {
 };
 
 function showtooltip() {
+  //shows tooltip if applicable
   $('#tooltip').text(tooltipinfo[this.id]);
   $('#tooltip').css('display', 'inline');
 }
 
 function hidetooltip() {
+  //hides tooltip
   $('#tooltip').css('display', 'none');
 }
 
 function tooltipfollow() {
+  //matches tooltip to mouse coordinates
   $('#tooltip').css('top', event.pageY);
   $('#tooltip').css('left', event.pageX - $('#tooltip').width() / 2);
 }
 
 function heropicked() {
-  //initializes hero specific values and calls sethstats
+  //initializes picked hero values
   resethero();
   heroinfo['illus'] = this.src;
   heroinfo['name'] = this.name;
@@ -79,6 +85,7 @@ function heropicked() {
 }
 
 function resethero() {
+  //resets hero stats to base values
   heroinfo['name'] = 'Hero';
   heroinfo['initabils'] = ['Analyze', 'Heal'];
   heroinfo['abils'] = ['Attack'];
@@ -92,8 +99,8 @@ function resethero() {
 }
 
 function addabil(aname) {
-  //case for an initabil
   for (let initabilobjs in initabilityarr) {
+    //apply bonus stats from added init ability
     if (initabilityarr[initabilobjs].name === aname) {
       heroinfo['initabils'].push(aname);
       heroinfo['maxhp'] += initabilityarr[initabilobjs].bonushp;
@@ -104,8 +111,9 @@ function addabil(aname) {
       heroinfo['basedmg'] += initabilityarr[initabilobjs].bonusbase;
     }
   }
-  //case for an abil
+
   for (let abilobjs in abilityarr) {
+    //apply bonus stats from added ability
     if (abilityarr[abilobjs].name === aname) {
       heroinfo['abils'].push(aname);
       heroinfo['maxhp'] += abilityarr[abilobjs].bonushp;
@@ -186,15 +194,65 @@ function setmstats(monsterinfo) {
   } else {
     $('#mward').text(`Ward: ${monsterinfo['currward']}/${monsterinfo['maxward']}`);
   }
+  mabilarr = monsterinfo['abilqueue'];
+  checkanalyzed(monsterinfo['name']);
 }
 
-function makepickable() {
-  for (let i = 1; i <= 23; i++) {
-    $('.pick' + i).mousedown(pickupabil);
+function checkanalyzed(name) {
+  analyzebool = false;
+  for (let t = 0; t < analyzed.length; t++) {
+    if (analyzed[t] === name) {
+      analyzebool = true;
+    }
+  }
+  analyzebool = true; //temporary
+  console.log('analyzing');
+  if (analyzebool) {
+    setabilqueue(6,'m');
+  }
+}
+
+function setabilqueue(num, type) {
+  //sets values for specified ability queue element.
+  //if num > 5, sets all elements for queue type
+  var startloop = 0;
+  var endloop = 0;
+  var charmod = 'h';
+  var abilarr = habilarr;
+  if (type === 'm') {
+    charmod = 'm';
+    abilarr = mabilarr;
+  } else if (type === 'hd') {
+    abilarr = dhabilarr;
+  } else if (type === 'md') {
+    charmod = 'm';
+    abilarr = dmabilarr;
+  }
+  if (num < 6) {
+    startloop = endloop = num-1;
+  } else {
+    endloop = 4;
+  }
+  for (let v = startloop; v <= endloop; v++) {
+    console.log(charmod+v+' '+abilarr);
+    var vv = v + 1;
+    for (let x = 0; x < abilityarr.length; x++) {
+      if (abilityarr[x].name === abilarr[v]) {
+        var abiltype = 'un';
+        if (abilityarr[x].type === 'Physical') {
+          abiltype = 'phys';
+        } else if (abilityarr[x].type === 'Magical') {
+          abiltype = 'mag';
+        }
+        $('#round' + vv + charmod).attr('value', abilityarr[x].name);
+        $('#round' + vv + charmod).html(`<i class="ra ${abilityarr[x].icon} ra-3x abil-box ${abiltype}-abil"></i>`);
+      }
+    }
   }
 }
 
 function pickupabil() {
+  //begin dragging ability
   $('#pickholder').html(this.innerHTML);
   heldabil = this.id.slice(1);
   $('body').mousemove(holdit);
@@ -221,24 +279,29 @@ function checkdrop() {
     for (let c = 0; c <= 5; c++) {
       var cc = c + 1;
       if (droparr[c].top < checky && droparr[c + 1].top >= checky) {
-        $('#round' + cc + 'h').html($('#pickholder').html());
+        //$('#round' + cc + 'h').html($('#pickholder').html());
         habilarr[c] = heldabil;
-        heldabil = '';
+        setabilqueue(cc,'h');
+
       }
     }
   }
+
+  heldabil = '';
   $('#pickholder').css('display', 'none');
+  console.log('checkdrop true');
+  $('body').unbind('mouseup');
 }
 
-
 function holdit() {
+  //while dragging ability, match it to mouse coordinates
   $('#pickholder').css('top', event.pageY - $('#pickholder').height() / 2);
   $('#pickholder').css('left', event.pageX - $('#pickholder').width() / 2);
 }
 
 $(document).ready(function(event) {
+  //sets up tooltip
   tooltiparr = [$('#warpick'), $('#ranpick'), $('#magpick')];
-
   $('body').mousemove(tooltipfollow);
   for (let id in tooltiparr) {
     tooltiparr[id].mouseenter(showtooltip);
@@ -247,5 +310,8 @@ $(document).ready(function(event) {
   $('#warpick').click(heropicked);
   $('#ranpick').click(heropicked);
   $('#magpick').click(heropicked);
-  makepickable();
+  //makes abilities draggable
+  for (let i = 1; i <= 23; i++) {
+    $('.pick' + i).mousedown(pickupabil);
+  }
 });
