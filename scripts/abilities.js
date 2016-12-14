@@ -1,4 +1,4 @@
-var abilityarr = [
+const abilityarr = [
   {
     name: 'Attack',
     type: 'Untyped',
@@ -766,7 +766,7 @@ var abilityarr = [
   }
 ];
 
-var initabilityarr = [
+const initabilityarr = [
   {
     name: 'Analyze',
     type: 'Untyped',

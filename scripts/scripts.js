@@ -6,6 +6,8 @@ var tooltipinfo = {
 
 var tooltiparr = [];
 
+var displayabils = [];
+
 var heroinfo = {
   name: '',
   illus: 'images/characters/magi.gif',
@@ -21,7 +23,7 @@ var heroinfo = {
   maxward: 0,
   currward: 0,
   initabils: [],
-  abils: []
+  abils: [],
 };
 
 var monsterarr = [{
@@ -73,7 +75,7 @@ function heropicked() {
   //initializes hero specific values and calls sethstats
   heroinfo['initabils'] = ['Analyze', 'Heal'];
   heroinfo['abils'] = ['Attack', 'Block'];
-  heroinfo['dmgvariance'] = [1,2];
+  heroinfo['dmgvariance'] = [1, 2];
   heroinfo['basedmg'] = 5;
   heroinfo['currarmor'] = heroinfo['maxarmor'] = 1;
   heroinfo['currward'] = heroinfo['maxward'] = 0;
@@ -81,7 +83,7 @@ function heropicked() {
     heroinfo['initabils'].push('Repair');
     heroinfo['currhp'] = heroinfo['maxhp'] = 40;
     heroinfo['currarmor'] = heroinfo['maxarmor'] = 3;
-    heroinfo['dmgvariance'] = [1,4];
+    heroinfo['dmgvariance'] = [1, 4];
   } else if (this.id === 'ranpick') {
     heroinfo['initabils'].push('Energize');
     heroinfo['currenergy'] = heroinfo['maxenergy'] = 30;
@@ -119,9 +121,22 @@ function sethstats() {
   } else {
     $('#hward').text(`Ward: ${heroinfo['currward']}/${heroinfo['maxward']}`);
   }
-  $('label').css('display', 'none');
+  //displays correct initiation abilities
   for (let inits in heroinfo['initabils']) {
     $('#l' + heroinfo['initabils'][inits]).css('display', 'inline-block');
+  }
+  //displays correct abilities
+  $('.un-abil').css('display', 'none');
+  $('.mag-abil').css('display', 'none');
+  $('.phys-abil').css('display', 'none');
+  for (let abils in heroinfo['abils']) {
+    for (let abilobjs in abilityarr) {
+      if (heroinfo['abils'][abils] === abilityarr[abilobjs].name) {
+        $('#a' + abilityarr[abilobjs].name).css('display', 'inline');
+        console.log($('#a' + abilityarr[abilobjs].name));
+        //something like $('#l' + heroinfo['initabils'][inits]).css('display', 'inline-block');
+      }
+    }
   }
 }
 
@@ -146,5 +161,15 @@ function setmstats(monsterinfo) {
     $('#mward').text(`Ward: ${monsterinfo['currward']}`);
   } else {
     $('#mward').text(`Ward: ${monsterinfo['currward']}/${monsterinfo['maxward']}`);
+  }
+}
+
+function pushabilities(abilname) {
+  for (let index in abilname) {
+    for (let bigindex in abilityarr) {
+      if (abilname[index] === abilityarr[bigindex].name) {
+        console.log(abilityarr[bigindex].name);
+      }
+    }
   }
 }
