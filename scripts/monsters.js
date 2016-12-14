@@ -80,7 +80,7 @@ const monsterarr = [{
   currhp: 17,
   maxenergy: 18,
   currenergy: 18,
-  dtype: 'Physical',
+  dtype: 'Magical',
   basedmg: 8,
   dmgvariance: 6,
   maxarmor: 0,

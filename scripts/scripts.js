@@ -5,8 +5,12 @@ var tooltipinfo = {
 };
 
 var tooltiparr = [];
-
 var displayabils = [];
+var heldabil = '';
+var droparr = [];
+var dropwidth = 0;
+var habilarr = ['','','','',''];
+var mabilarr = ['','','','',''];
 
 var heroinfo = {
   name: '',
@@ -71,7 +75,7 @@ function heropicked() {
   maxresources();
   sethstats();
   //temporary monster initialization
-  setmstats(monsterarr[Math.floor(Math.random()*monsterarr.length)]);
+  setmstats(monsterarr[Math.floor(Math.random() * monsterarr.length)]);
 }
 
 function resethero() {
@@ -115,6 +119,7 @@ function addabil(aname) {
 }
 
 function maxresources() {
+  //sets all curr hero values to max
   heroinfo['currhp'] = heroinfo['maxhp'];
   heroinfo['currenergy'] = heroinfo['maxenergy'];
   heroinfo['currarmor'] = heroinfo['maxarmor'];
@@ -182,7 +187,7 @@ function setmstats(monsterinfo) {
     $('#mward').text(`Ward: ${monsterinfo['currward']}/${monsterinfo['maxward']}`);
   }
 }
-// start here wednesday
+
 function makepickable() {
   for (let i = 1; i <= 23; i++) {
     $('.pick' + i).mousedown(pickupabil);
@@ -190,26 +195,46 @@ function makepickable() {
 }
 
 function pickupabil() {
-  $('#pickholder').contents(this.innerHTML);
-  $('#pickholder').mousemove(holdit);
-  $('#pickholder').css('display','inline');
-console.log('pickup '+$('#pickholder').contents());
-  for (let j = 0; j < 5; j++) {
-    $('.pick' + j).mouseup(checkdrop);
+  $('#pickholder').html(this.innerHTML);
+  heldabil = this.id.slice(1);
+  $('body').mousemove(holdit);
+  $('#pickholder').css('display', 'inline');
+  droparr = [];
+  dropwidth = $('#round1h').width() + 10;
+  for (var d = 1; d <= 5; d++) {
+    droparr.push($('#round' + d + 'h').position());
+    //console.log('here '+ droparr[d-1].top);
+    if (d === 5) {
+      droparr.push({
+        'top': $('#round' + d + 'h').position().top + $('#round' + d + 'h').height() + 5
+      });
+    }
   }
+  $('body').mouseup(checkdrop);
 }
 
 function checkdrop() {
-
+  //while dragging, onmouseup, check for and process eligible drop
+  let checkx = event.pageX;
+  let checky = event.pageY;
+  if (checkx > droparr[0].left - 10 && checkx < droparr[0].left + dropwidth) {
+    for (let c = 0; c <= 5; c++) {
+      var cc = c + 1;
+      if (droparr[c].top < checky && droparr[c + 1].top >= checky) {
+        $('#round' + cc + 'h').html($('#pickholder').html());
+        habilarr[c] = heldabil;
+        heldabil = '';
+      }
+    }
+  }
+  $('#pickholder').css('display', 'none');
 }
+
 
 function holdit() {
-  console.log('holding '+this);
-  // this.css('top', event.pageY - this.height() / 2);
-  // this.css('left', event.pageX - this.width() / 2);
+  $('#pickholder').css('top', event.pageY - $('#pickholder').height() / 2);
+  $('#pickholder').css('left', event.pageX - $('#pickholder').width() / 2);
 }
-///for wednesday
-
 
 $(document).ready(function(event) {
   tooltiparr = [$('#warpick'), $('#ranpick'), $('#magpick')];
