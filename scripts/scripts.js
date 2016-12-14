@@ -17,7 +17,7 @@ var heroinfo = {
   currenergy: 20,
   dtype: 'Physical',
   basedmg: 5,
-  dmgvariance: [1, 2],
+  dmgvariance: 2,
   maxarmor: 1,
   currarmor: 1,
   maxward: 0,
@@ -35,7 +35,7 @@ var monsterarr = [{
   currenergy: 20,
   dtype: 'Physical',
   basedmg: 5,
-  dmgvariance: [1, 3],
+  dmgvariance: 3,
   maxarmor: 0,
   currarmor: 0,
   maxward: 0,
@@ -74,22 +74,27 @@ function tooltipfollow() {
 function heropicked() {
   //initializes hero specific values and calls sethstats
   heroinfo['initabils'] = ['Analyze', 'Heal'];
-  heroinfo['abils'] = ['Attack', 'Block'];
-  heroinfo['dmgvariance'] = [1, 2];
+  heroinfo['abils'] = ['Attack'];
+  heroinfo['dmgvariance'] = 2;
   heroinfo['basedmg'] = 5;
   heroinfo['currarmor'] = heroinfo['maxarmor'] = 1;
   heroinfo['currward'] = heroinfo['maxward'] = 0;
   if (this.id === 'warpick') {
     heroinfo['initabils'].push('Repair');
+    heroinfo['abils'].push('Block');
+    heroinfo['abils'].push('Combo');
     heroinfo['currhp'] = heroinfo['maxhp'] = 40;
     heroinfo['currarmor'] = heroinfo['maxarmor'] = 3;
-    heroinfo['dmgvariance'] = [1, 4];
   } else if (this.id === 'ranpick') {
     heroinfo['initabils'].push('Energize');
+    heroinfo['abils'].push('Dodge');
+    heroinfo['abils'].push('Opening-Volley');
     heroinfo['currenergy'] = heroinfo['maxenergy'] = 30;
     heroinfo['basedmg'] = 8;
   } else if (this.id === 'magpick') {
     heroinfo['initabils'].push('Protect');
+    heroinfo['abils'].push('Lightning-Bolt');
+    heroinfo['abils'].push('Mote-of-Fire');
     heroinfo['dtype'] = 'Magical';
     heroinfo['currward'] = heroinfo['maxward'] = 3;
   }
@@ -107,7 +112,7 @@ function sethstats() {
   $('#hhpbar').prop('style', `width: ${Math.floor(heroinfo['currhp']/heroinfo['maxhp'])}`)
   $('#henergy').text(`Energy: ${heroinfo['currenergy']}/${heroinfo['maxenergy']}`);
   $('#henergybar').prop('style', `width: ${Math.floor(heroinfo['currenergy']/heroinfo['maxenergy'])}`)
-  $('#hdmg').text(`Damage: ${heroinfo['basedmg']}+${heroinfo['dmgvariance'][0]}d${heroinfo['dmgvariance'][1]}`);
+  $('#hdmg').text(`Damage: ${heroinfo['basedmg']}+1d${heroinfo['dmgvariance']}`);
   $('#htype').text(`Type: ${heroinfo['dtype']}`);
   if (heroinfo['maxarmor'] === heroinfo['currarmor']) {
     $('#harmor').text(`Armor: ${heroinfo['currarmor']}`);
@@ -121,14 +126,13 @@ function sethstats() {
   } else {
     $('#hward').text(`Ward: ${heroinfo['currward']}/${heroinfo['maxward']}`);
   }
-  //displays correct initiation abilities
+  //displays only known initiation abilities
+  $('.init-abil').css('display', 'none');
   for (let inits in heroinfo['initabils']) {
     $('#l' + heroinfo['initabils'][inits]).css('display', 'inline-block');
   }
-  //displays correct abilities
-  $('.un-abil').css('display', 'none');
-  $('.mag-abil').css('display', 'none');
-  $('.phys-abil').css('display', 'none');
+  //displays only known abilities
+  $('.pick-abil').css('display', 'none');
   for (let abils in heroinfo['abils']) {
     for (let abilobjs in abilityarr) {
       if (heroinfo['abils'][abils] === abilityarr[abilobjs].name) {
@@ -146,7 +150,7 @@ function setmstats(monsterinfo) {
   $('#mhpbar').prop('style', `width: ${Math.floor(monsterinfo['currhp']/monsterinfo['maxhp'])}`)
   $('#menergy').text(`Energy: ${monsterinfo['currenergy']}/${monsterinfo['maxenergy']}`);
   $('#menergybar').prop('style', `width: ${Math.floor(monsterinfo['currenergy']/monsterinfo['maxenergy'])}`)
-  $('#mdmg').text(`Damage: ${monsterinfo['basedmg']}+${monsterinfo['dmgvariance'][0]}d${monsterinfo['dmgvariance'][1]}`);
+  $('#mdmg').text(`Damage: ${monsterinfo['basedmg']}+1d${monsterinfo['dmgvariance']}`);
   $('#mtype').text(`Type: ${monsterinfo['dtype']}`);
   if (monsterinfo['maxarmor'] === monsterinfo['currarmor']) {
     $('#marmor').text(`Armor: ${monsterinfo['currarmor']}`);

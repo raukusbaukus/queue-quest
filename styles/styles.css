@@ -173,7 +173,12 @@ label {
   box-shadow: inset 3px 3px 4px rgba(225, 255, 255, 1);
 }
 
-.un-abil, .ra-uncertainty {
+.no-abil {
+  background-color: #ccc;
+}
+
+
+.un-abil {
   background-color: #c6c19d;
 }
 

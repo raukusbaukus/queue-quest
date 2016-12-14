@@ -117,11 +117,14 @@
             <div class="pure-u-2-3">
                 <form id="initiate-options" class="pure-form">
                     <h3>Initiation Ability:</h3>
-                    <label id="lAnalyze" for="rb-analyze"><input type="radio" id="rb-analyze" value="analyze" name="init-group"> <i class="ra ra-aware ra-lg"></i> Analyze</label>
-                    <label id="lHeal" for="rb-heal"><input type="radio" id="rb-heal" value="heal"  name="init-group"> <i class="ra ra-health ra-lg"></i> Heal</label>
-                    <label id="lEnergize" for="rb-energize"><input type="radio" id="rb-energize" value="energize"  name="init-group"> <i class="ra ra-chicken-leg ra-lg"></i> Energize</label>
-                    <label id="lRepair" for="rb-repair"><input type="radio" id="rb-repair" value="repair"  name="init-group"> <i class="ra ra-forging ra-lg"></i> Repair</label>
-                    <label id="lProtect" for="rb-protect"><input type="radio" id="rb-protect" value="protect"  name="init-group"> <i class="ra ra-aura ra-lg"></i> Protect</label>
+                    <label id="lAnalyze" class="init-abil" for="rb-analyze"><input type="radio" id="rb-analyze" value="analyze" name="init-group"> <i class="ra ra-aware ra-lg"></i> Analyze</label>
+                    <label id="lEnergize" class="init-abil" for="rb-energize"><input type="radio" id="rb-energize" value="energize"  name="init-group"> <i class="ra ra-chicken-leg ra-lg"></i> Energize</label>
+                    <label id="lExhaust" class="init-abil" for="rb-exhaust"><input type="radio" id="rb-exhaust" value="exhaust"  name="init-group"> <i class="ra ra-player-despair ra-lg"></i> Heal</label>
+                    <label id="lHeal" class="init-abil" for="rb-heal"><input type="radio" id="rb-heal" value="heal"  name="init-group"> <i class="ra ra-health ra-lg"></i> Heal</label>
+                    <label id="lIntimidate" class="init-abil" for="rb-intimidate"><input type="radio" id="rb-intimidate" value="intimidate"  name="init-group"> <i class="ra ra-blade-bite ra-lg"></i> Intimidate</label>
+                    <label id="lProtect" class="init-abil" for="rb-protect"><input type="radio" id="rb-protect" value="protect"  name="init-group"> <i class="ra ra-aura ra-lg"></i> Protect</label>
+                    <label id="lRepair" class="init-abil" for="rb-repair"><input type="radio" id="rb-repair" value="repair"  name="init-group"> <i class="ra ra-forging ra-lg"></i> Repair</label>
+                    <label id="lWeaken" class="init-abil" for="rb-weaken"><input type="radio" id="rb-weaken" value="weaken"  name="init-group"> <i class="ra ra-falling-down ra-lg"></i> Weaken</label>
                 </form>
             </div>
             <div class="pure-u-1-6">
@@ -135,27 +138,27 @@
                 <div class="hrounds">
                     <div class="pure-g">
                         <div class="pure-u-1-6" id="round1h">
-                            <i class="ra ra-sword ra-3x abil-box"></i>
+                            <i class="ra ra-medical-pack ra-3x abil-box no-abil"></i>
                         </div>
                         <div class="pure-u-5-6">
                         </div>
                         <div class="pure-u-1-6" id="round2h">
-                            <i class="ra ra-shield ra-3x abil-box"></i>
+                            <i class="ra ra-medical-pack ra-3x abil-box no-abil"></i>
                         </div>
                         <div class="pure-u-5-6">
                         </div>
                         <div class="pure-u-1-6" id="round3h">
-                            <i class="ra ra-archer ra-3x abil-box"></i>
+                            <i class="ra ra-medical-pack ra-3x abil-box no-abil"></i>
                         </div>
                         <div class="pure-u-5-6">
                         </div>
                         <div class="pure-u-1-6" id="round4h">
-                            <i class="ra ra-small-fire ra-3x abil-box"></i>
+                            <i class="ra ra-medical-pack ra-3x abil-box no-abil"></i>
                         </div>
                         <div class="pure-u-5-6">
                         </div>
                         <div class="pure-u-1-6" id="round5h">
-                            <i class="ra ra-sword ra-3x abil-box"></i>
+                            <i class="ra ra-medical-pack ra-3x abil-box no-abil"></i>
                         </div>
                         <div class="pure-u-5-6">
                         </div>
@@ -170,27 +173,27 @@
                         <div class="pure-u-5-6">
                         </div>
                         <div class="pure-u-1-6" id="round1m">
-                            <i class="ra ra-uncertainty ra-3x abil-box"></i>
+                            <i class="ra ra-uncertainty ra-3x abil-box no-abil"></i>
                         </div>
                         <div class="pure-u-5-6">
                         </div>
                         <div class="pure-u-1-6" id="round2m">
-                            <i class="ra ra-uncertainty ra-3x abil-box"></i>
+                            <i class="ra ra-uncertainty ra-3x abil-box no-abil"></i>
                         </div>
                         <div class="pure-u-5-6">
                         </div>
                         <div class="pure-u-1-6" id="round3m">
-                            <i class="ra ra-uncertainty ra-3x abil-box"></i>
+                            <i class="ra ra-uncertainty ra-3x abil-box no-abil"></i>
                         </div>
                         <div class="pure-u-5-6">
                         </div>
                         <div class="pure-u-1-6" id="round4m">
-                            <i class="ra ra-uncertainty ra-3x abil-box"></i>
+                            <i class="ra ra-uncertainty ra-3x abil-box no-abil"></i>
                         </div>
                         <div class="pure-u-5-6">
                         </div>
                         <div class="pure-u-1-6" id="round5m">
-                            <i class="ra ra-uncertainty ra-3x abil-box"></i>
+                            <i class="ra ra-uncertainty ra-3x abil-box no-abil"></i>
                         </div>
                     </div>
                 </div>
@@ -203,74 +206,74 @@
             <div class="pure-u-2-3">
                 <div class="known-abilities">
                     <h3>Known Abilities:</h3>
-                    <div id="aAttack" class="un-abil" value="Attack">
-                        <i class="ra ra-sword ra-3x abil-box"></i>
+                    <div id="aAttack" class="pick-abil" value="Attack">
+                        <i class="ra ra-sword ra-3x abil-box un-abil"></i>
                     </div>
-                    <div id="aArmor-Break" class="phys-abil" value="ArmorBreak">
-                        <i class="ra ra-broken-shield ra-3x abil-box"></i>
+                    <div id="aArmor-Break" class="pick-abil" value="ArmorBreak">
+                        <i class="ra ra-broken-shield ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aBlock" class="phys-abil" value="Block">
-                        <i class="ra ra-shield ra-3x abil-box"></i>
+                    <div id="aBlock" class="pick-abil" value="Block">
+                        <i class="ra ra-shield ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aCleanse" class="mag-abil" value="Cleanse">
-                        <i class="ra ra-circle-of-circles ra-3x abil-box"></i>
+                    <div id="aCleanse" class="pick-abil" value="Cleanse">
+                        <i class="ra ra-circle-of-circles ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aCold-Snap" class="mag-abil" value="Cold-Snap">
-                        <i class="ra ra-frozen-arrow ra-3x abil-box"></i>
+                    <div id="aCold-Snap" class="pick-abil" value="Cold-Snap">
+                        <i class="ra ra-frozen-arrow ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aCombo" class="phys-abil" value="Combo">
-                        <i class="ra ra-dervish-swords ra-3x abil-box"></i>
+                    <div id="aCombo" class="pick-abil" value="Combo">
+                        <i class="ra ra-dervish-swords ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aCounter-Attack" class="phys-abil" value="Counter-Attack">
-                        <i class="ra ra-axe-swing ra-3x abil-box"></i>
+                    <div id="aCounter-Attack" class="pick-abil" value="Counter-Attack">
+                        <i class="ra ra-axe-swing ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aCurse" class="mag-abil" value="Curse">
-                        <i class="ra ra-bleeding-eye ra-3x abil-box"></i>
+                    <div id="aCurse" class="pick-abil" value="Curse">
+                        <i class="ra ra-bleeding-eye ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aDodge" class="phys-abil" value="Dodge">
-                        <i class="ra ra-player-dodge ra-3x abil-box"></i>
+                    <div id="aDodge" class="pick-abil" value="Dodge">
+                        <i class="ra ra-player-dodge ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aDoom" class="mag-abil" value="Doom">
-                        <i class="ra ra-death-skull ra-3x abil-box"></i>
+                    <div id="aDoom" class="pick-abil" value="Doom">
+                        <i class="ra ra-death-skull ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aDrain-Life" class="mag-abil" value="Drain-Life">
-                        <i class="ra ra-defibrilate ra-3x abil-box"></i>
+                    <div id="aDrain-Life" class="pick-abil" value="Drain-Life">
+                        <i class="ra ra-defibrilate ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aFeint" class="phys-abil" value="Feint">
-                        <i class="ra ra-overhead ra-3x abil-box"></i>
+                    <div id="aFeint" class="pick-abil" value="Feint">
+                        <i class="ra ra-overhead ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aFinisher" class="phys-abil" value="Finisher">
-                        <i class="ra ra-scythe ra-3x abil-box"></i>
+                    <div id="aFinisher" class="pick-abil" value="Finisher">
+                        <i class="ra ra-scythe ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aFlame-Wave" class="mag-abil" value="Flame-Wave">
-                        <i class="ra ra-heavy-fall ra-3x abil-box"></i>
+                    <div id="aFlame-Wave" class="pick-abil" value="Flame-Wave">
+                        <i class="ra ra-heavy-fall ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aLightning-Bolt" class="mag-abil" value="Lightning-Bolt">
-                        <i class="ra ra-focused-lightning ra-3x abil-box"></i>
+                    <div id="aLightning-Bolt" class="pick-abil" value="Lightning-Bolt">
+                        <i class="ra ra-focused-lightning ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aMote-of-Fire" class="mag-abil" value="Mote-of-Fire">
-                        <i class="ra ra-burning-embers ra-3x abil-box"></i>
+                    <div id="aMote-of-Fire" class="pick-abil" value="Mote-of-Fire">
+                        <i class="ra ra-burning-embers ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aOpening-Volley" class="phys-abil" value="Opening-Volley">
-                        <i class="ra ra-archer ra-3x abil-box"></i>
+                    <div id="aOpening-Volley" class="pick-abil" value="Opening-Volley">
+                        <i class="ra ra-archer ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aOverpower" class="phys-abil" value="Overpower">
-                        <i class="ra ra-muscle-up ra-3x abil-box"></i>
+                    <div id="aOverpower" class="pick-abil" value="Overpower">
+                        <i class="ra ra-muscle-up ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aPiercing-Strike" class="phys-abil" value="Piercing-Strike">
-                        <i class="ra ra-grappling-hook ra-3x abil-box"></i>
+                    <div id="aPiercing-Strike" class="pick-abil" value="Piercing-Strike">
+                        <i class="ra ra-grappling-hook ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aSilence" class="mag-abil" value="Silence">
-                        <i class="ra ra-speech-bubble ra-3x abil-box"></i>
+                    <div id="aSilence" class="pick-abil" value="Silence">
+                        <i class="ra ra-speech-bubble ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aSpell-Break" class="mag-abil" value="Spell-Break">
-                        <i class="ra ra-player-pain ra-3x abil-box"></i>
+                    <div id="aSpell-Break" class="pick-abil" value="Spell-Break">
+                        <i class="ra ra-player-pain ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aTurn" class="mag-abil" value="Turn">
-                        <i class="ra ra-ankh ra-3x abil-box"></i>
+                    <div id="aTurn" class="pick-abil" value="Turn">
+                        <i class="ra ra-ankh ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aVenom-Strike" class="mag-abil" value="Venom-Strike">
-                        <i class="ra ra-dripping-knife ra-3x abil-box"></i>
+                    <div id="aVenom-Strike" class="pick-abil" value="Venom-Strike">
+                        <i class="ra ra-dripping-knife ra-3x abil-box phys-abil"></i>
                     </div>
                     <div class="pure-u-1-6">
                     </div>

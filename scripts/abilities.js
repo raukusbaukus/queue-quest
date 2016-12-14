@@ -148,7 +148,7 @@ const abilityarr = [
     successreq: false,
     offense: true,
     defense: true,
-    condapply: ['Frozen'],
+    condapply: ['Cold'],
     condremove: ['Burning'],
     evade: false,
     hpboost: 0,
