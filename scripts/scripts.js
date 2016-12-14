@@ -26,37 +26,6 @@ var heroinfo = {
   abils: [],
 };
 
-var monsterarr = [{
-  name: 'Tiefling',
-  illus: 'images/characters/tiefling.gif',
-  maxhp: 15,
-  currhp: 15,
-  maxenergy: 20,
-  currenergy: 20,
-  dtype: 'Physical',
-  basedmg: 5,
-  dmgvariance: 3,
-  maxarmor: 0,
-  currarmor: 0,
-  maxward: 0,
-  currward: 0,
-  abilqueue: [],
-}];
-
-
-$(document).ready(function(event) {
-  tooltiparr = [$('#warpick'), $('#ranpick'), $('#magpick')];
-
-  $('body').mousemove(tooltipfollow);
-  for (let id in tooltiparr) {
-    tooltiparr[id].mouseenter(showtooltip);
-    tooltiparr[id].mouseleave(hidetooltip);
-  }
-  $('#warpick').click(heropicked);
-  $('#ranpick').click(heropicked);
-  $('#magpick').click(heropicked);
-})
-
 function showtooltip() {
   $('#tooltip').text(tooltipinfo[this.id]);
   $('#tooltip').css('display', 'inline');
@@ -101,7 +70,8 @@ function heropicked() {
   }
   maxresources();
   sethstats();
-  setmstats(monsterarr[0]); //temporary monster initialization
+  //temporary monster initialization
+  setmstats(monsterarr[Math.floor(Math.random()*monsterarr.length)]);
 }
 
 function resethero() {
@@ -212,13 +182,45 @@ function setmstats(monsterinfo) {
     $('#mward').text(`Ward: ${monsterinfo['currward']}/${monsterinfo['maxward']}`);
   }
 }
-
-function pushabilities(abilname) {
-  for (let index in abilname) {
-    for (let bigindex in abilityarr) {
-      if (abilname[index] === abilityarr[bigindex].name) {
-        console.log(abilityarr[bigindex].name);
-      }
-    }
+// start here wednesday
+function makepickable() {
+  for (let i = 1; i <= 23; i++) {
+    $('.pick' + i).mousedown(pickupabil);
   }
 }
+
+function pickupabil() {
+  $('#pickholder').contents(this.innerHTML);
+  $('#pickholder').mousemove(holdit);
+  $('#pickholder').css('display','inline');
+console.log('pickup '+$('#pickholder').contents());
+  for (let j = 0; j < 5; j++) {
+    $('.pick' + j).mouseup(checkdrop);
+  }
+}
+
+function checkdrop() {
+
+}
+
+function holdit() {
+  console.log('holding '+this);
+  // this.css('top', event.pageY - this.height() / 2);
+  // this.css('left', event.pageX - this.width() / 2);
+}
+///for wednesday
+
+
+$(document).ready(function(event) {
+  tooltiparr = [$('#warpick'), $('#ranpick'), $('#magpick')];
+
+  $('body').mousemove(tooltipfollow);
+  for (let id in tooltiparr) {
+    tooltiparr[id].mouseenter(showtooltip);
+    tooltiparr[id].mouseleave(hidetooltip);
+  }
+  $('#warpick').click(heropicked);
+  $('#ranpick').click(heropicked);
+  $('#magpick').click(heropicked);
+  makepickable();
+});

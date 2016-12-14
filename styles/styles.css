@@ -177,7 +177,6 @@ label {
   background-color: #ccc;
 }
 
-
 .un-abil {
   background-color: #c6c19d;
 }
@@ -226,8 +225,15 @@ label {
     box-shadow: inset -1px -1px 2px rgba(135, 113, 68, 0.6);
 }
 
+#pickholder {
+  display: none;
+}
+
+
+/*not working below this*/
 #hhpbar, #henergybar, #mhpbar, #menergybar {
   z-index: 0;
+  /*not working*/
 }
 
 }

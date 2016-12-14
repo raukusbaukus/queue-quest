@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous" defer></script>
-<script src="scripts/abilities.js" charset="utf-8" defer></script>
+    <script src="scripts/abilities.js" charset="utf-8" defer></script>
+    <script src="scripts/monsters.js" charset="utf-8" defer></script>
     <script src="scripts/scripts.js" charset="utf-8" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.0/build/pure-min.css">
@@ -21,8 +22,10 @@
         <i class="ra ra-skull-trophy ra-lg"></i><i class="ra ra-monster-skull ra-3x"></i><i class="ra ra-skull-trophy ra-lg"></i>
     </header>
     <section id="tooltip" class="tooltip">
-      This is a tooltip.
+        This is a tooltip.
     </section>
+    <div id="pickholder">
+    </div>
     <section class="welcome">
         <div class="pure-g">
             <div class="pure-u-1-6">
@@ -57,13 +60,13 @@
                 <div class="char-stats">
                     <h2 id="hero-name">Hero</h2>
                     <div class="hp-bar">
-                        <h3 id="hhp" >HP: </h3>
+                        <h3 id="hhp">HP: </h3>
                         <div class="meter">
                             <span id="hhpbar" style="width: 25%"></span>
                         </div>
                     </div>
                     <div class="energy-bar">
-                        <h3 id="henergy" >Energy: </h3>
+                        <h3 id="henergy">Energy: </h3>
                         <div class="meter orange">
                             <span id="henergybar" style="width: 25%"></span>
                         </div>
@@ -91,7 +94,7 @@
                 <div class="monster-stats">
                     <h2 id="monster-name">Monster</h2>
                     <div class="m-hp-bar">
-                        <h3 id="mhp" >HP: </h3>
+                        <h3 id="mhp">HP: </h3>
                         <div class="meter">
                             <span id="mhpbar" style="width: 25%"></span>
                         </div>
@@ -206,73 +209,73 @@
             <div class="pure-u-2-3">
                 <div class="known-abilities">
                     <h3>Known Abilities:</h3>
-                    <div id="aAttack" class="pick-abil" value="Attack">
+                    <div id="aAttack" class="pick-abil pick1" value="Attack">
                         <i class="ra ra-sword ra-3x abil-box un-abil"></i>
                     </div>
-                    <div id="aArmor-Break" class="pick-abil" value="ArmorBreak">
+                    <div id="aArmor-Break" class="pick-abil pick2" value="ArmorBreak">
                         <i class="ra ra-broken-shield ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aBlock" class="pick-abil" value="Block">
+                    <div id="aBlock" class="pick-abil pick3" value="Block">
                         <i class="ra ra-shield ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aCleanse" class="pick-abil" value="Cleanse">
+                    <div id="aCleanse" class="pick-abil pick4" value="Cleanse">
                         <i class="ra ra-circle-of-circles ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aCold-Snap" class="pick-abil" value="Cold-Snap">
+                    <div id="aCold-Snap" class="pick-abil pick5" value="Cold-Snap">
                         <i class="ra ra-frozen-arrow ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aCombo" class="pick-abil" value="Combo">
+                    <div id="aCombo" class="pick-abil pick6" value="Combo">
                         <i class="ra ra-dervish-swords ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aCounter-Attack" class="pick-abil" value="Counter-Attack">
+                    <div id="aCounter-Attack" class="pick-abil pick7" value="Counter-Attack">
                         <i class="ra ra-axe-swing ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aCurse" class="pick-abil" value="Curse">
+                    <div id="aCurse" class="pick-abil pick8" value="Curse">
                         <i class="ra ra-bleeding-eye ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aDodge" class="pick-abil" value="Dodge">
+                    <div id="aDodge" class="pick-abil pick9" value="Dodge">
                         <i class="ra ra-player-dodge ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aDoom" class="pick-abil" value="Doom">
+                    <div id="aDoom" class="pick-abil pick10" value="Doom">
                         <i class="ra ra-death-skull ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aDrain-Life" class="pick-abil" value="Drain-Life">
+                    <div id="aDrain-Life" class="pick-abil pick11" value="Drain-Life">
                         <i class="ra ra-defibrilate ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aFeint" class="pick-abil" value="Feint">
+                    <div id="aFeint" class="pick-abil pick12" value="Feint">
                         <i class="ra ra-overhead ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aFinisher" class="pick-abil" value="Finisher">
+                    <div id="aFinisher" class="pick-abil pick13" value="Finisher">
                         <i class="ra ra-scythe ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aFlame-Wave" class="pick-abil" value="Flame-Wave">
+                    <div id="aFlame-Wave" class="pick-abil pick14" value="Flame-Wave">
                         <i class="ra ra-heavy-fall ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aLightning-Bolt" class="pick-abil" value="Lightning-Bolt">
+                    <div id="aLightning-Bolt" class="pick-abil pick15" value="Lightning-Bolt">
                         <i class="ra ra-focused-lightning ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aMote-of-Fire" class="pick-abil" value="Mote-of-Fire">
+                    <div id="aMote-of-Fire" class="pick-abil pick16" value="Mote-of-Fire">
                         <i class="ra ra-burning-embers ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aOpening-Volley" class="pick-abil" value="Opening-Volley">
+                    <div id="aOpening-Volley" class="pick-abil pick17" value="Opening-Volley">
                         <i class="ra ra-archer ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aOverpower" class="pick-abil" value="Overpower">
+                    <div id="aOverpower" class="pick-abil pick18" value="Overpower">
                         <i class="ra ra-muscle-up ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aPiercing-Strike" class="pick-abil" value="Piercing-Strike">
+                    <div id="aPiercing-Strike" class="pick-abil pick19" value="Piercing-Strike">
                         <i class="ra ra-grappling-hook ra-3x abil-box phys-abil"></i>
                     </div>
-                    <div id="aSilence" class="pick-abil" value="Silence">
+                    <div id="aSilence" class="pick-abil pick20" value="Silence">
                         <i class="ra ra-speech-bubble ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aSpell-Break" class="pick-abil" value="Spell-Break">
+                    <div id="aSpell-Break" class="pick-abil pick21" value="Spell-Break">
                         <i class="ra ra-player-pain ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aTurn" class="pick-abil" value="Turn">
+                    <div id="aTurn" class="pick-abil pick22" value="Turn">
                         <i class="ra ra-ankh ra-3x abil-box mag-abil"></i>
                     </div>
-                    <div id="aVenom-Strike" class="pick-abil" value="Venom-Strike">
+                    <div id="aVenom-Strike" class="pick-abil pick23" value="Venom-Strike">
                         <i class="ra ra-dripping-knife ra-3x abil-box phys-abil"></i>
                     </div>
                     <div class="pure-u-1-6">
