@@ -190,6 +190,10 @@ label {
   background-color: #b29dc6;
 }
 
+.pick-abil {
+  display: none;
+}
+
 .intro {
     display: flex;
     border: 2px;

@@ -73,35 +73,82 @@ function tooltipfollow() {
 
 function heropicked() {
   //initializes hero specific values and calls sethstats
+  resethero();
+  heroinfo['illus'] = this.src;
+  heroinfo['name'] = this.name;
+  if (this.id === 'warpick') {
+    heroinfo['maxhp'] = 38;
+    heroinfo['maxarmor'] = 1.5;
+    addabil('Repair');
+    addabil('Block');
+    addabil('Combo');
+  } else if (this.id === 'ranpick') {
+    heroinfo['maxhp'] = 34;
+    heroinfo['maxenergy'] = 30;
+    heroinfo['basedmg'] = 6;
+    heroinfo['maxarmor'] = 1.5;
+    addabil('Energize');
+    addabil('Dodge');
+    addabil('Opening-Volley');
+  } else if (this.id === 'magpick') {
+    heroinfo['dtype'] = 'Magical';
+    heroinfo['maxhp'] = 27;
+    heroinfo['maxenergy'] = 28;
+    heroinfo['maxward'] = 1.5;
+    addabil('Protect');
+    addabil('Lightning-Bolt');
+    addabil('Mote-of-Fire');
+  }
+  maxresources();
+  sethstats();
+  setmstats(monsterarr[0]); //temporary monster initialization
+}
+
+function resethero() {
+  heroinfo['name'] = 'Hero';
   heroinfo['initabils'] = ['Analyze', 'Heal'];
   heroinfo['abils'] = ['Attack'];
   heroinfo['dmgvariance'] = 2;
   heroinfo['basedmg'] = 5;
-  heroinfo['currarmor'] = heroinfo['maxarmor'] = 1;
-  heroinfo['currward'] = heroinfo['maxward'] = 0;
-  if (this.id === 'warpick') {
-    heroinfo['initabils'].push('Repair');
-    heroinfo['abils'].push('Block');
-    heroinfo['abils'].push('Combo');
-    heroinfo['currhp'] = heroinfo['maxhp'] = 40;
-    heroinfo['currarmor'] = heroinfo['maxarmor'] = 3;
-  } else if (this.id === 'ranpick') {
-    heroinfo['initabils'].push('Energize');
-    heroinfo['abils'].push('Dodge');
-    heroinfo['abils'].push('Opening-Volley');
-    heroinfo['currenergy'] = heroinfo['maxenergy'] = 30;
-    heroinfo['basedmg'] = 8;
-  } else if (this.id === 'magpick') {
-    heroinfo['initabils'].push('Protect');
-    heroinfo['abils'].push('Lightning-Bolt');
-    heroinfo['abils'].push('Mote-of-Fire');
-    heroinfo['dtype'] = 'Magical';
-    heroinfo['currward'] = heroinfo['maxward'] = 3;
+  heroinfo['maxhp'] = heroinfo['currhp'] = 30;
+  heroinfo['maxenergy'] = heroinfo['currenergy'] = 20;
+  heroinfo['maxarmor'] = heroinfo['currentarmor'] = 1;
+  heroinfo['maxward'] = heroinfo['currentward'] = 0;
+  heroinfo['dtype'] = 'Physical';
+}
+
+function addabil(aname) {
+  //case for an initabil
+  for (let initabilobjs in initabilityarr) {
+    if (initabilityarr[initabilobjs].name === aname) {
+      heroinfo['initabils'].push(aname);
+      heroinfo['maxhp'] += initabilityarr[initabilobjs].bonushp;
+      heroinfo['maxenergy'] += initabilityarr[initabilobjs].bonusenergy;
+      heroinfo['maxarmor'] += initabilityarr[initabilobjs].bonusarmor;
+      heroinfo['maxward'] += initabilityarr[initabilobjs].bonusward;
+      heroinfo['dmgvariance'] += initabilityarr[initabilobjs].bonusvariance;
+      heroinfo['basedmg'] += initabilityarr[initabilobjs].bonusbase;
+    }
   }
-  heroinfo['illus'] = this.src;
-  heroinfo['name'] = this.name;
-  sethstats();
-  setmstats(monsterarr[0]); //temporary monster initialization
+  //case for an abil
+  for (let abilobjs in abilityarr) {
+    if (abilityarr[abilobjs].name === aname) {
+      heroinfo['abils'].push(aname);
+      heroinfo['maxhp'] += abilityarr[abilobjs].bonushp;
+      heroinfo['maxenergy'] += abilityarr[abilobjs].bonusenergy;
+      heroinfo['maxarmor'] += abilityarr[abilobjs].bonusarmor;
+      heroinfo['maxward'] += abilityarr[abilobjs].bonusward;
+      heroinfo['dmgvariance'] += abilityarr[abilobjs].bonusvariance;
+      heroinfo['basedmg'] += abilityarr[abilobjs].bonusbase;
+    }
+  }
+}
+
+function maxresources() {
+  heroinfo['currhp'] = heroinfo['maxhp'];
+  heroinfo['currenergy'] = heroinfo['maxenergy'];
+  heroinfo['currarmor'] = heroinfo['maxarmor'];
+  heroinfo['currward'] = heroinfo['maxward'];
 }
 
 function sethstats() {
