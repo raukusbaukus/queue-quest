@@ -403,18 +403,22 @@ $(document).ready(function(event) {
 function checkinitiation() {
   //checks to see if initiation is ready to run, and then does so if it is
   var checked = $('input[name=init-group]:checked').val();
-  var realinit;
-  for (var o = 0; o < initabilityarr.length; o++) {
-    if (initabilityarr[o].name === checked) {
-      realinit = initabilityarr[o];
+  if (checked !== undefined) {
+    var realinit;
+    for (var o = 0; o < initabilityarr.length; o++) {
+      if (initabilityarr[o].name === checked) {
+        realinit = initabilityarr[o];
+      }
     }
-  }
-  if (realinit) {
-    if (realinit.energycost > heroinfo['currenergy']) {
-      showerr('That ability costs ' + realinit.energycost + ' energy, but your hero only has ' + heroinfo['currenergy'] + '. Please select a different ability.');
-    } else {
-      runinitiation(realinit);
+    if (realinit) {
+      if (realinit.energycost > heroinfo['currenergy']) {
+        showerr('That ability costs ' + realinit.energycost + ' energy, but your hero only has ' + heroinfo['currenergy'] + '. Please select a different ability.');
+      } else {
+        runinitiation(realinit);
+      }
     }
+  } else {
+    showerr('Please select an ability to initiate with.');
   }
 }
 
@@ -450,6 +454,11 @@ function errdisplay() {
 }
 
 function runinitiation(iabil) {
+  //uncheck initiation options
+  for (var w = 0; w < initabilityarr.length; w++) {
+    var nombre = initabilityarr[w].name.toLowerCase();
+    $('#rb-' + nombre)[0].checked = false;
+  }
   //processes initiation
   heroinfo['currenergy'] -= iabil.energycost;
   if (heroinfo['currenergy'] < 0) {
