@@ -12,7 +12,7 @@ const monsterarr = [{
   currarmor: 1,
   maxward: 1,
   currward: 1,
-  abilqueue: ['Curse', 'Attack', 'Venom-Strike', 'Dodge', 'Attack']
+  abilqueue: ['Curse', 'Attack', 'Venom-Strike', 'Dodge', 'Attack'],
 }, {
   name: 'Crazed Gnome',
   illus: 'images/characters/crazed-gnome.gif',
@@ -27,7 +27,7 @@ const monsterarr = [{
   currarmor: 0,
   maxward: 2,
   currward: 2,
-  abilqueue: ['Mote-of-Fire', 'Silence', 'Flame-Wave', 'Drain-Life', 'Attack']
+  abilqueue: ['Mote-of-Fire', 'Silence', 'Flame-Wave', 'Drain-Life', 'Attack'],
 }, {
   name: 'Pit Fiend',
   illus: 'images/characters/pit-fiend.gif',
@@ -42,7 +42,7 @@ const monsterarr = [{
   currarmor: 3,
   maxward: 1,
   currward: 1,
-  abilqueue: ['Doom', 'Feint', 'Attack', 'Combo', 'Finisher']
+  abilqueue: ['Doom', 'Feint', 'Attack', 'Combo', 'Finisher'],
 }, {
   name: 'Goblin Archer',
   illus: 'images/characters/goblin-archer.gif',
@@ -57,7 +57,7 @@ const monsterarr = [{
   currarmor: 0,
   maxward: 0,
   currward: 0,
-  abilqueue: ['Opening-Volley', 'Attack', 'Piercing-Strike', 'Dodge', 'Attack']
+  abilqueue: ['Opening-Volley', 'Attack', 'Piercing-Strike', 'Dodge', 'Attack'],
 }, {
   name: 'Goblin Berserker',
   illus: 'images/characters/goblin-berserker.gif',
@@ -72,7 +72,7 @@ const monsterarr = [{
   currarmor: 2,
   maxward: 0,
   currward: 0,
-  abilqueue: ['Armor-Break', 'Attack', 'Combo', 'Feint', 'Attack']
+  abilqueue: ['Armor-Break', 'Attack', 'Combo', 'Feint', 'Attack'],
 }, {
   name: 'Goblin Crone',
   illus: 'images/characters/goblin-crone.gif',
@@ -87,5 +87,5 @@ const monsterarr = [{
   currarmor: 0,
   maxward: 4,
   currward: 4,
-  abilqueue: ['Curse', 'Lightning-Bolt', 'Cold-Snap', 'Attack', 'Dodge']
+  abilqueue: ['Curse', 'Lightning-Bolt', 'Cold-Snap', 'Attack', 'Dodge'],
 }];
