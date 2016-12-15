@@ -346,7 +346,7 @@ const abilityarr = [{
   typereq: false,
   successreq: false,
   offense: true,
-  defense: true,
+  defense: false,
   condapply: [],
   condremove: [],
   evade: false,
