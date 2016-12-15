@@ -13,6 +13,7 @@ const monsterarr = [{
   maxward: 1,
   currward: 1,
   abilqueue: ['Curse', 'Attack', 'Venom-Strike', 'Dodge', 'Attack'],
+  evil: true,
 }, {
   name: 'Crazed Gnome',
   illus: 'images/characters/crazed-gnome.gif',
@@ -28,6 +29,7 @@ const monsterarr = [{
   maxward: 2,
   currward: 2,
   abilqueue: ['Mote-of-Fire', 'Silence', 'Flame-Wave', 'Drain-Life', 'Attack'],
+  evil: false,
 }, {
   name: 'Pit Fiend',
   illus: 'images/characters/pit-fiend.gif',
@@ -43,6 +45,7 @@ const monsterarr = [{
   maxward: 1,
   currward: 1,
   abilqueue: ['Doom', 'Feint', 'Attack', 'Combo', 'Finisher'],
+  evil: true,
 }, {
   name: 'Goblin Archer',
   illus: 'images/characters/goblin-archer.gif',
@@ -58,6 +61,7 @@ const monsterarr = [{
   maxward: 0,
   currward: 0,
   abilqueue: ['Opening-Volley', 'Attack', 'Piercing-Strike', 'Dodge', 'Attack'],
+  evil: false,
 }, {
   name: 'Goblin Berserker',
   illus: 'images/characters/goblin-berserker.gif',
@@ -73,6 +77,7 @@ const monsterarr = [{
   maxward: 0,
   currward: 0,
   abilqueue: ['Armor-Break', 'Attack', 'Combo', 'Feint', 'Attack'],
+  evil: false,
 }, {
   name: 'Goblin Crone',
   illus: 'images/characters/goblin-crone.gif',
@@ -88,4 +93,5 @@ const monsterarr = [{
   maxward: 4,
   currward: 4,
   abilqueue: ['Curse', 'Lightning-Bolt', 'Cold-Snap', 'Attack', 'Dodge'],
+  evil: false,
 }];

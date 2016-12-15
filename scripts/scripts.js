@@ -1,8 +1,30 @@
-var tooltipinfo = {
+const tooltipinfo = {
   warpick: "The Warrior has the highest starting HP and Armor. They also begin play with the 'Repair' initiation ability, which lets you repair broken armor.",
   ranpick: "The Ranger has the highest starting Energy and Damage. They also begin play with the 'Energize' initiation ability, which lets you recover missing energy.",
   magpick: "The Magi's starts with a Ward to mitigate magic damage, and their attacks are considered magic damage, which bypasses armor. They also begin play with the 'Protect' initiation ability, which lets you recharge a diminished ward."
 };
+
+const condarr = [{
+  name: 'burn',
+  effect: 'Burning: -2 HP. ',
+  html: '<img class="conds condburn" src="images/conditions/condition-burn.gif" />',
+}, {
+  name: 'curse',
+  effect: 'Cursed: reflect 25% damage back on self. ',
+  html: '<img class="conds condcurse" src="images/conditions/condition-curse.gif" />',
+}, {
+  name: 'poison',
+  effect: 'Poisoned: -2 HP. ',
+  html: '<img class="conds condpoison" src="images/conditions/condition-poison.gif" />',
+}, {
+  name: 'silence',
+  effect: 'Silenced: magic fumble. ',
+  html: '<img class="conds condsilence" src="images/conditions/condition-silence.gif" />',
+}, {
+  name: 'turn',
+  effect: 'Turned: auto-fumble. ',
+  html: '<img class="conds condturn" alt="Turned: automatically fumble" src="images/conditions/condition-turn.gif" />',
+}, ];
 
 var tooltiparr = [];
 var displayabils = [];
@@ -49,16 +71,13 @@ function hidetooltip() {
 }
 
 function mousefollow() {
-  //matches tooltip to mouse coordinates
+  //matches tooltips and errors to mouse coordinates
   $('#errholder').css('top', event.pageY - 200);
   $('#errholder').css('left', event.pageX - $('#errholder').width() / 2);
   $('#tooltip').css('top', event.pageY);
   $('#tooltip').css('left', event.pageX - $('#tooltip').width() / 2);
 }
 
-function errfollow() {
-  //matches tooltip to mouse coordinates
-}
 
 function heropicked() {
   //initializes picked hero values
@@ -110,7 +129,6 @@ function resethero() {
   heroinfo['maxenergy'] = heroinfo['currenergy'] = 20;
   heroinfo['maxarmor'] = heroinfo['currentarmor'] = 1;
   heroinfo['maxward'] = heroinfo['currentward'] = 0;
-  heroinfo['dtype'] = 'Physical';
 }
 
 function addabil(aname) {
@@ -422,6 +440,9 @@ function runencounter() {
   var mdefault = [false, false, false, false, false];
   var gameover = false;
   var victory = false;
+  var hcondtimer = [0, 0, 0, 0, 0];
+  var mcondtimer = [0, 0, 0, 0, 0];
+  var $condapplier = '';
   for (let a = 0; a < 5; a++) {
     var aa = a + 1;
     //math value setup
@@ -455,156 +476,256 @@ function runencounter() {
     if (mrealabils[a].type !== 'Untyped' && mrealabils[a].type !== currmonster['dtype']) {
       mtypematch = .6;
     }
-    //check and spend energy, default if not enough
-    if (hrealabils[a].energycost > heroinfo['currenergy']) {
-      hrealabils[a] = abilityarr['Attack'];
-      habilarr[a] = 'Attack';
-      hdefault[a] = true;
-      houtput += 'Lacking energy - defaulting to "Attack". ';
-    } else {
-      hespent = hrealabils[a].energycost;
-      heroinfo['currenergy'] -= hespent;
-      if (hespent > 0) {
-        houtput += '-' + hespent + ' Energy. ';
-      }
-    }
-    if (mrealabils[a].energycost > currmonster['currenergy']) {
-      mrealabils[a] = abilityarr[0];
-      mdefault[a] = true;
-      moutput += 'Lacking energy - defaulting to "Attack". ';
-    } else {
-      mespent = mrealabils[a].energycost;
-      currmonster['currenergy'] -= mespent; //was incorrectly hespent
-      if (mespent > 0) {
-        moutput += '-' + mespent + ' Energy. ';
-      }
-    }
-    //apply armor and ward break
-    if (!mrealabils[a].evade) {
-      if (hrealabils[a].abreak > 0) {
-        moutput += '-' + hrealabils[a].abreak + ' Armor. ';
-      }
-      if (hrealabils[a].wbreak > 0) {
-        moutput += '-' + hrealabils[a].wbreak + ' Ward. ';
-      }
-      currmonster['currarmor'] -= hrealabils[a].abreak;
-      currmonster['currward'] -= hrealabils[a].wbreak;
-      if (currmonster['currarmor'] < 0) {
-        currmonster['currarmor'] = 0;
-      }
-      if (currmonster['currward'] < 0) {
-        currmonster['currward'] = 0;
-      }
-    } else {
-      moutput += 'Evading ';
-    }
-    if (!hrealabils[a].evade) {
-      if (mrealabils[a].abreak > 0) {
-        houtput += '-' + mrealabils[a].abreak + ' Armor. ';
-      }
-      if (mrealabils[a].wbreak > 0) {
-        houtput += '-' + mrealabils[a].wbreak + ' Ward. ';
-      }
-      heroinfo['currarmor'] -= mrealabils[a].abreak;
-      heroinfo['currward'] -= mrealabils[a].wbreak;
-      if (heroinfo['currarmor'] < 0) {
-        heroinfo['currarmor'] = 0;
-      }
-      if (heroinfo['currward'] < 0) {
-        heroinfo['currward'] = 0;
-      }
-    } else {
-      houtput += 'Evading. ';
-    }
-    //determine damage dealt
-    if (hrealabils[a].offense) {
-      hvar = Math.ceil(Math.random() * heroinfo['dmgvariance']);
-      hdealt = Math.round((heroinfo['basedmg'] + hvar) * hrealabils[a].dmgmultiplier);
-    }
-    if (mrealabils[a].offense) {
-      mvar = Math.ceil(Math.random() * currmonster['dmgvariance']);
-      mdealt = Math.round((currmonster['basedmg'] + mvar) * mrealabils[a].dmgmultiplier);
-    }
-    //determine damage taken
-    if (!mrealabils[a].ignoremit) {
-      if (mrealabils[a].type === 'Physical' || (mrealabils[a].type === 'Untyped' && currmonster['dtype'] === 'Physical')) {
-        htaken = mdealt * (1 - hrealabils[a].pmitigate);
-        htaken -= heroinfo['currarmor'];
+    //check and spend energy, default if not enough. fumble if silenced and magic (not Cleanse)
+    if (hrealabils[a].name !== 'Cleanse' && hcondtimer[3] > 0 && hrealabils[a].type === 'Magical') {
+        //silenced and magic fumble
+        for (let abilobjs in abilityarr) {
+          if (abilityarr[abilobjs].name === 'Fumble') {
+            hrealabils[a] = abilityarr[abilobjs];
+          }
+        }
+        houtput += 'FUMBLED! ';
+      } else if (hrealabils[a].energycost > heroinfo['currenergy']) {
+        hrealabils[a] = abilityarr[0];
+        habilarr[a] = 'Attack';
+        hdefault[a] = true;
+        houtput += 'Lacking energy - defaulting to "Attack". ';
       } else {
-        htaken = mdealt * (1 - hrealabils[a].mmitigate);
-        htaken -= heroinfo['currward'];
+        hespent = hrealabils[a].energycost;
+        heroinfo['currenergy'] -= hespent;
+        if (hespent > 0) {
+          houtput += '-' + hespent + ' Energy. ';
+        }
       }
-    } else {
-      htaken = mdealt;
-    }
-    if (htaken < 0) {
-      htaken = 0;
-    }
-    if (!hrealabils[a].ignoremit) {
-      if (hrealabils[a].type === 'Physical' || (hrealabils[a].type === 'Untyped' && heroinfo['dtype'] === 'Physical')) {
-        mtaken = hdealt * (1 - mrealabils[a].pmitigate);
-        mtaken -= currmonster['currarmor'];
-      } else {
-        mtaken = hdealt * (1 - mrealabils[a].mmitigate);
-        mtaken -= currmonster['currward'];
+      if (mrealabils[a].name !== 'Cleanse' && mcondtimer[3] > 0 && mrealabils[a].type === 'Magical') {
+          //silenced and magic fumble
+          for (let abilobjs in abilityarr) {
+            if (abilityarr[abilobjs].name === 'Fumble') {
+              mrealabils[a] = abilityarr[abilobjs];
+            }
+          }
+          moutput += 'FUMBLED! ';
+        } else if (mrealabils[a].name !== 'Cleanse' && mcondtimer[4] > 0 && currmonster['evil']) {
+          //turned
+          for (let abilobjs in abilityarr) {
+            if (abilityarr[abilobjs].name === 'Fumble') {
+              mrealabils[a] = abilityarr[abilobjs];
+            }
+          }
+          moutput += 'FUMBLED! ';
+        } else if (mrealabils[a].energycost > currmonster['currenergy']) {
+          mrealabils[a] = abilityarr[0];
+          mdefault[a] = true;
+          moutput += 'Lacking energy - defaulting to "Attack". ';
+        } else {
+          mespent = mrealabils[a].energycost;
+          currmonster['currenergy'] -= mespent; //was incorrectly hespent
+          if (mespent > 0) {
+            moutput += '-' + mespent + ' Energy. ';
+          }
+        }
+        //apply armor/ward break and conditions
+        if (!mrealabils[a].evade) {
+          if (hrealabils[a].abreak > 0) {
+            moutput += '-' + hrealabils[a].abreak + ' Armor. ';
+          }
+          if (hrealabils[a].wbreak > 0) {
+            moutput += '-' + hrealabils[a].wbreak + ' Ward. ';
+          }
+          currmonster['currarmor'] -= hrealabils[a].abreak;
+          currmonster['currward'] -= hrealabils[a].wbreak;
+          if (currmonster['currarmor'] < 0) {
+            currmonster['currarmor'] = 0;
+          }
+          if (currmonster['currward'] < 0) {
+            currmonster['currward'] = 0;
+          }
+          //condition application:
+          if (hrealabils[a].condapply.length > 0) {
+            //let condlist = hrealabils[a].condapply;
+            for (var c in hrealabils[a].condapply) {
+              for (var s in condarr) {
+                if (hrealabils[a].condapply[c] === condarr[s].name) {
+                  mcondtimer[c] = 2;
+                  if (condarr[s].name === 'curse' || condarr[s].name === 'silence') {
+                    mcondtimer[c] += 1;
+                  }
+                }
+              }
+            }
+          }
+        } else {
+          moutput += 'Evading ';
+        }
+        if (!hrealabils[a].evade) {
+          if (mrealabils[a].abreak > 0) {
+            houtput += '-' + mrealabils[a].abreak + ' Armor. ';
+          }
+          if (mrealabils[a].wbreak > 0) {
+            houtput += '-' + mrealabils[a].wbreak + ' Ward. ';
+          }
+          heroinfo['currarmor'] -= mrealabils[a].abreak;
+          heroinfo['currward'] -= mrealabils[a].wbreak;
+          if (heroinfo['currarmor'] < 0) {
+            heroinfo['currarmor'] = 0;
+          }
+          if (heroinfo['currward'] < 0) {
+            heroinfo['currward'] = 0;
+          }
+          //condition application:
+          if (mrealabils[a].condapply.length > 0) {
+            //var condlist = mrealabils[a].condapply;
+            for (var c in mrealabils[a].condapply) {
+              for (var s in condarr) {
+                if (mrealabils[a].condapply[c] === condarr[s].name) {
+                  hcondtimer[s] = 2;
+                  if (condarr[s].name === 'silence') {
+                    hcondtimer[c] += 1;
+                  }
+                }
+              }
+            }
+          }
+        } else {
+          houtput += 'Evading. ';
+        }
+        //determine damage dealt
+        if (hrealabils[a].offense) {
+          hvar = Math.ceil(Math.random() * heroinfo['dmgvariance']);
+          hdealt = Math.round((heroinfo['basedmg'] + hvar) * hrealabils[a].dmgmultiplier);
+        }
+        if (mrealabils[a].offense) {
+          mvar = Math.ceil(Math.random() * currmonster['dmgvariance']);
+          mdealt = Math.round((currmonster['basedmg'] + mvar) * mrealabils[a].dmgmultiplier);
+        }
+        //determine damage taken
+        if (!mrealabils[a].ignoremit) {
+          if (mrealabils[a].type === 'Physical' || (mrealabils[a].type === 'Untyped' && currmonster['dtype'] === 'Physical')) {
+            htaken = mdealt * (1 - hrealabils[a].pmitigate);
+            htaken -= heroinfo['currarmor'];
+          } else {
+            htaken = mdealt * (1 - hrealabils[a].mmitigate);
+            htaken -= heroinfo['currward'];
+          }
+        } else {
+          htaken = mdealt;
+        }
+        if (htaken < 0) {
+          htaken = 0;
+        }
+        if (!hrealabils[a].ignoremit) {
+          if (hrealabils[a].type === 'Physical' || (hrealabils[a].type === 'Untyped' && heroinfo['dtype'] === 'Physical')) {
+            mtaken = hdealt * (1 - mrealabils[a].pmitigate);
+            mtaken -= currmonster['currarmor'];
+          } else {
+            mtaken = hdealt * (1 - mrealabils[a].mmitigate);
+            mtaken -= currmonster['currward'];
+          }
+        } else {
+          mtaken = hdealt;
+        }
+        if (mtaken < 0) {
+          mtaken = 0;
+        }
+        //account for reflection
+        var htakentemp = htaken;
+        var mtakentemp = mtaken;
+        if (hrealabils[a].type === 'Physical' || (hrealabils[a].type === 'Untyped' && heroinfo['dtype'] === 'Physical')) {
+          htakentemp += (mrealabils[a].preflect * mtaken);
+        } else {
+          htakentemp += (mrealabils[a].mreflect * mtaken);
+        }
+        if (mrealabils[a].type === 'Physical' || (mrealabils[a].type === 'Untyped' && currmonster['dtype'] === 'Physical')) {
+          mtakentemp += (hrealabils[a].preflect * htaken);
+        } else {
+          mtakentemp += (hrealabils[a].mreflect * htaken);
+        }
+        //account for condition damage and display conditions
+        for (let y = 0; y < 5; y++) {
+          if (hcondtimer[y] > 0) {
+            switch (y) {
+              case 0:
+                htaken += 2;
+                $condapplier = $(condarr[y].html);
+                break;
+              case 1:
+                htaken += (hdealt * .3);
+                $condapplier = $(condarr[y].html);
+                break;
+              case 2:
+                htaken += 2;
+                $condapplier = $(condarr[y].html);
+                break;
+              case 3:
+                $condapplier = $(condarr[y].html);
+                break;
+              case 4:
+                $condapplier = $(condarr[y].html);
+                break;
+            }
+            $('#h' + aa + 'cond').append($condapplier);
+            $condapplier = '';
+            hcondtimer[y]--;
+          }
+          if (mcondtimer[y] > 0) {
+            switch (y) {
+              case 0:
+                mtaken += 2;
+                $condapplier = $(condarr[y].html);
+                break;
+              case 1:
+                mtaken += (mdealt * .3);
+                $condapplier = $(condarr[y].html);
+                break;
+              case 2:
+                mtaken += 2;
+                $condapplier = $(condarr[y].html);
+                break;
+              case 3:
+                $condapplier = $(condarr[y].html);
+                break;
+              case 4:
+                $condapplier = $(condarr[y].html);
+                break;
+            }
+            $('#m' + aa + 'cond').append($condapplier);
+            $condapplier = '';
+            mcondtimer[y]--;
+          }
+        }
+        htaken = Math.round(htakentemp); mtaken = Math.round(mtakentemp);
+        if (htaken > 0) {
+          houtput += '-' + htaken + ' HP. ';
+        }
+        if (mtaken > 0) {
+          moutput += '-' + mtaken + ' HP. ';
+        }
+        //update stats
+        heroinfo['currhp'] -= htaken; heroinfo['currenergy'] -= hespent; currmonster['currhp'] -= mtaken; currmonster['currenergy'] -= mespent;
+        //check for deados
+        if (currmonster['currhp'] <= 0) {
+          moutput += 'DEFEATED!';
+          currmonster['currhp'] = 0;
+          victory = true;
+        }
+        if (heroinfo['currhp'] <= 0) {
+          houtput += 'DEFEATED!';
+          heroinfo['currhp'] = 0;
+          gameover = true;
+        }
+        //display results
+        $('#h' + aa + 'out').text(houtput).fadeTo(1000, 1, sethstats); $('#m' + aa + 'out').text(moutput).fadeTo(1000, 1, setmstats);
+        if (gameover) {
+          //put up game over info
+          break;
+        } else if (victory) {
+          //put up next encounter/level up
+          break;
+        } else if (a === 4) {
+          //call for another engagement
+        }
       }
-    } else {
-      mtaken = hdealt;
-    }
-    if (mtaken < 0) {
-      mtaken = 0;
-    }
-    //account for reflection and round
-    var htakentemp = htaken;
-    var mtakentemp = mtaken;
-    if (hrealabils[a].type === 'Physical' || (hrealabils[a].type === 'Untyped' && heroinfo['dtype'] === 'Physical')) {
-      htakentemp += (mrealabils[a].preflect * mtaken);
-    } else {
-      htakentemp += (mrealabils[a].mreflect * mtaken);
-    }
-    if (mrealabils[a].type === 'Physical' || (mrealabils[a].type === 'Untyped' && currmonster['dtype'] === 'Physical')) {
-      mtakentemp += (hrealabils[a].preflect * htaken);
-    } else {
-      mtakentemp += (hrealabils[a].mreflect * htaken);
-    }
-    htaken = Math.round(htakentemp);
-    mtaken = Math.round(mtakentemp);
-    if (htaken > 0) {
-      houtput += '-' + htaken + ' HP. ';
-    }
-    if (mtaken > 0) {
-      moutput += '-' + mtaken + ' HP. ';
-    }
-    //update stats
-    heroinfo['currhp'] -= htaken;
-    heroinfo['currenergy'] -= hespent;
-    currmonster['currhp'] -= mtaken;
-    currmonster['currenergy'] -= mespent;
-    //check for deados
-    if (currmonster['currhp'] <= 0) {
-      moutput += 'DEFEATED!';
-      currmonster['currhp'] = 0;
-      victory = true;
-    }
-    if (heroinfo['currhp'] <= 0) {
-      houtput += 'DEFEATED!';
-      heroinfo['currhp'] = 0;
-      gameover = true;
-    }
-    //display results
-    $('#h' + aa + 'out').text(houtput).fadeTo(1000, 1, sethstats);
-    $('#m' + aa + 'out').text(moutput).fadeTo(1000, 1, setmstats);
-    if (gameover) {
-      //put up game over info
-      break;
-    } else if (victory) {
-      //put up next encounter/level up
-      break;
-    } else if (a === 4) {
-      //call for another engagement
-    }
-  }
 
 
 
-}
+    }

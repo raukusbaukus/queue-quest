@@ -134,8 +134,10 @@ label {
     box-shadow: inset -1px -1px 1px rgba(50, 50, 50, 0.6);
 }
 
-.encoutput {
-  opacity: 0;
+.conds {
+  display: inline;
+  min-width: 15px;
+  max-width: 30px;
 }
 
 #errholder {
