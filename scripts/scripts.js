@@ -41,6 +41,7 @@ var dmabilarr = ['defaultm', 'defaultm', 'defaultm', 'defaultm', 'defaultm'];
 var analyzebool = false;
 var clickcount = 0;
 var initbool = false;
+var mdmgmult = 1;
 var currmonster = {};
 
 var heroinfo = {
@@ -239,9 +240,10 @@ function checkanalyzed(name) {
       analyzebool = true;
     }
   }
-  analyzebool = true; //temporary
   if (analyzebool) {
     setabilqueue(6, 'm');
+  } else {
+    setabilqueue(6, 'md');
   }
 }
 
@@ -400,7 +402,20 @@ $(document).ready(function(event) {
 
 function checkinitiation() {
   //checks to see if initiation is ready to run, and then does so if it is
-  console.log($('input[checked=true]').value);
+  var checked = $('input[name=init-group]:checked').val();
+  var realinit;
+  for (var o = 0; o < initabilityarr.length; o++) {
+    if (initabilityarr[o].name === checked) {
+      realinit = initabilityarr[o];
+    }
+  }
+  if (realinit) {
+    if (realinit.energycost > heroinfo['currenergy']) {
+      showerr('That ability costs ' + realinit.energycost + ' energy, but your hero only has ' + heroinfo['currenergy'] + '. Please select a different ability.');
+    } else {
+      runinitiation(realinit);
+    }
+  }
 }
 
 function checkencounter() {
@@ -432,6 +447,56 @@ function errdisplay() {
     $('body').unbind('click');
     clickcount = 0;
   }
+}
+
+function runinitiation(iabil) {
+  //processes initiation
+  heroinfo['currenergy'] -= iabil.energycost;
+  if (heroinfo['currenergy'] < 0) {
+    heroinfo['currenergy'] = 0;
+  }
+  switch (iabil.name) {
+    case 'Analyze':
+      analyzed.push(currmonster['name']);
+      break;
+    case 'Energize':
+      heroinfo['currenergy'] += iabil.energybump;
+      if (heroinfo['currenergy'] > heroinfo['maxenergy']) {
+        heroinfo['currenergy'] = heroinfo['maxenergy'];
+      }
+      break;
+    case 'Exhaust':
+      currmonster['currenergy'] *= iabil.menergymultiplier;
+      break;
+    case 'Heal':
+      heroinfo['currhp'] += iabil.hpbump;
+      if (heroinfo['currhp'] > heroinfo['maxhp']) {
+        heroinfo['currhp'] = heroinfo['maxhp'];
+      }
+      break;
+    case 'Intimidate':
+      mdmgmult = iabil.mdamagemultiplier;
+      break;
+    case 'Protect':
+      heroinfo['currward'] += iabil.wbump;
+      if (heroinfo['currward'] > heroinfo['maxward']) {
+        heroinfo['currward'] = heroinfo['maxward'];
+      }
+      break;
+    case 'Repair':
+      heroinfo['currarmor'] += iabil.abump;
+      if (heroinfo['currarmor'] > heroinfo['maxarmor']) {
+        heroinfo['currarmor'] = heroinfo['maxarmor'];
+      }
+      break;
+    case 'Weaken':
+      currmonster['basedmg'] -= 1;
+      currmonster['dmgvariance'] -= 1;
+      break;
+  }
+  sethstats();
+  setmstats();
+  //start encounter
 }
 
 function runencounter() {

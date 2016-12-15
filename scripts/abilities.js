@@ -813,7 +813,7 @@ const initabilityarr = [{
     bonusward: 0,
     bonusvariance: 0,
     bonusbase: 0,
-    energycost: 2,
+    energycost: 0,
     analyze: true,
     hpbump: 0,
     energybump: 0,
