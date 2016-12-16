@@ -26,6 +26,7 @@ const condarr = [{
   html: '<img class="conds condturn" alt="Turned: automatically fumble" src="images/conditions/condition-turn.gif" />',
 }, ];
 
+var apiurl = '';
 var tooltiparr = [];
 var displayabils = [];
 var heldabil = '';
@@ -75,6 +76,8 @@ function hidetooltip() {
 
 function mousefollow() {
   //matches tooltips and errors to mouse coordinates
+  $('#encounterend').css('top', event.pageY);
+  $('#encounterend').css('left', event.pageX - $('#encounterend').width() / 2);
   $('#errholder').css('top', event.pageY - 200);
   $('#errholder').css('left', event.pageX - $('#errholder').width() / 2);
   $('#tooltip').css('top', event.pageY);
@@ -380,26 +383,6 @@ function holdit() {
   $('#pickholder').css('left', event.pageX - $('#pickholder').width() / 2);
 }
 
-$(document).ready(function(event) {
-  //sets up tooltip
-  tooltiparr = [$('#warpick'), $('#ranpick'), $('#magpick')];
-  $('body').mousemove(mousefollow);
-  for (let id in tooltiparr) {
-    tooltiparr[id].mouseenter(showtooltip);
-    tooltiparr[id].mouseleave(hidetooltip);
-  }
-  $('#warpick').click(heropicked);
-  $('#ranpick').click(heropicked);
-  $('#magpick').click(heropicked);
-  //makes abilities draggable
-  for (let i = 1; i <= 23; i++) {
-    $('.pick' + i).mousedown(pickupabil);
-  }
-  $('#init-submit').click(checkinitiation);
-  //sets up encounter lockin button
-  $('#encounter-lockin').click(checkencounter);
-});
-
 function checkinitiation() {
   //checks to see if initiation is ready to run, and then does so if it is
   var checked = $('input[name=init-group]:checked').val();
@@ -452,6 +435,7 @@ function errdisplay() {
     clickcount = 0;
   }
 }
+
 
 function runinitiation(iabil) {
   //uncheck initiation options
@@ -509,6 +493,9 @@ function runinitiation(iabil) {
 }
 
 function runencounter() {
+  //auto-analyze
+  analyzed.push(currmonster['name']);
+  checkanalyzed(currmonster['name']);
   //processes a full encounter, round by round
   var hrealabils = [];
   var mrealabils = [];
@@ -524,8 +511,6 @@ function runencounter() {
     //math value setup
     var houtput = '';
     var moutput = '';
-    var apiurl = '';
-    var apiobj = {};
     var htaken = 0;
     var mtaken = 0;
     var hdealt = 0;
@@ -595,8 +580,6 @@ function runencounter() {
     } else {
       mespent = mrealabils[a].energycost;
       if (mespent > 0) {
-        console.log('rd' + a + ' spent/cost: ' +
-          mespent + ' ' + mrealabils[a].energycost + ' currenergy: ' + currmonster['currenergy']);
         moutput += '-' + mespent + ' Energy. ';
       }
       //apply armor/ward break and conditions
@@ -809,50 +792,138 @@ function runencounter() {
         gameover = true;
       }
       //display results
-      $('#h' + aa + 'out').text(houtput).fadeTo(1000, 1, sethstats);
-      $('#m' + aa + 'out').text(moutput).fadeTo(1000, 1, setmstats);
+      $('#h' + aa + 'out').text(houtput);
+      $('#m' + aa + 'out').text(moutput);
+      sethstats();
+      setmstats();
+      var title = '';
+      var msg = '';
+      var func = '';
       if (gameover) {
         //put up game over info
+        title = 'Game Over';
+        msg = 'Oh no, our mighty hero has fallen in battle! However, all is not lost. Click to restart the game with a new hero.';
+        func = defeat;
         break;
       } else if (victory) {
         //put up next encounter/level up
         break;
       } else if (a === 4) {
         //call for another engagement
+        title = 'The battle continues...';
+        msg = 'No clear victor was determined during this encounter, and the battle must continue. Take a breath and then click to start setting up your game plan for the next round with your opponent.';
+        func = reengage;
       }
     }
+  }
+  endencounter(title, msg, func);
+}
+
+function endencounter(title, msg, func) {
+  console.log('called endencounter');
+  $('#endtitle').text(title);
+  $('#endmsg').text(msg);
+  $('#encounterend').css('display', 'inline');
+  $('body').mouseup(func);
+}
+
+function reengage() {
+  console.log('called reengage');
+  //encounter inconclusive, re-engage for another encounter
+  clickcount++;
+  if (clickcount > 1) {
+    //clear any encounter stuff
+    for (var f = 0; f <= 5; f++) {
+      $('#h' + f + 'cond').html('');
+      $('#m' + f + 'cond').html('');
+      $('#h' + f + 'out').text('');
+      $('#m' + f + 'out').text('');
+    }
+    $('#encounterend').css('display', 'none');
+    $('body').unbind('mouseup');
+    clickcount = 0;
+    setabilqueue(6, 'hd');
+  }
+}
+
+function defeat() {
+  console.log('defeated');
+  clickcount++;
+  if (clickcount > 1) {
+    //clear any encounter stuff
+    for (var z = 0; z <= 5; z++) {
+      $('#h' + z + 'cond').html('');
+      $('#m' + z + 'cond').html('');
+      $('#h' + z + 'out').text('');
+      $('#m' + z + 'out').text('');
+    }
+    $('#encounterend').css('display', 'none');
+    $('body').unbind('mouseup');
+    clickcount = 0;
+    setabilqueue(6, 'hd');
   }
 }
 
 function gethvariance() {
-  //`https://rolz.org/api/?5d${heroinfo['dmgvariance']}.json`
-  //`https://rolz.org/api/?5d${currmonster['dmgvariance']}.json`
-  var gotobj = { //placeholder for returned json object
-    "details": " (4 +2 +3 +3 +3) "
-  };
-  var hresults = hresults.slice(2, hresults.length - 2); //trim whitespace and parens
+  //on success for h, call for m. on success for m, start runencounter
+  var apiurl =  `https://cors-anywhere.herokuapp.com/https://rolz.org/api/?5d${heroinfo['dmgvariance']}.json`;
+  fetch(apiurl).then(res=>res.json()).then(d=>{
+    hvarsuccess(d);
+  });
+}
+
+
+function hvarsuccess(data) {
+  //data has returned
+  var gotobj = data;
+  var hresults = gotobj.details;
+  hresults = hresults.slice(2, hresults.length - 2); //trim whitespace and parens
   hresultsarr = hresults.split(' +');
   for (var r = 0; r < hresultsarr.length; r++) {
     hresultsarr[r] = parseInt(hresultsarr[r]); //convert to ints
   }
-  //on success for h, call for m. on success for m, start runencounter
+  console.log(hresultsarr);
+  getmvariance();
+}
 
-  /*var invocation = new XMLHttpRequest();
-  apiurl = 'https://rolz.org/api/?1d' + heroinfo['dmgvariance'] + '.json';
+function getmvariance() {
+  var mapiurl =  `https://cors-anywhere.herokuapp.com/https://rolz.org/api/?5d${currmonster['dmgvariance']}.json`;
+  fetch(mapiurl).then(res=>res.json()).then(g=>{
+    mvarsuccess(g);
+  });
+}
 
-  function callOtherDomain() {
-    if (invocation) {
-      console.log('invoking');
-      invocation.open('GET', apiurl, true);
-      invocation.onreadystatechange = handler;
-      invocation.send();
-    }
+function mvarsuccess(data) {
+  //data has returned
+  var mgotobj = data;
+  var mresults = mgotobj.details;
+  mresults = mresults.slice(2, mresults.length - 2); //trim whitespace and parens
+  mresultsarr = mresults.split(' +');
+  for (var r = 0; r < mresultsarr.length; r++) {
+    mresultsarr[r] = parseInt(mresultsarr[r]); //convert to ints
   }
-  callOtherDomain();
-  */
-
+  console.log(mresultsarr);
+  //getmvariance();
 }
 
-function gmvariance() {
-
-}
+$(document).ready(function(event) {
+  //sets up tooltip
+  tooltiparr = [$('#warpick'), $('#ranpick'), $('#magpick')];
+  $('body').mousemove(mousefollow);
+  for (let id in tooltiparr) {
+    tooltiparr[id].mouseenter(showtooltip);
+    tooltiparr[id].mouseleave(hidetooltip);
+  }
+  $('#warpick').click(heropicked);
+  $('#ranpick').click(heropicked);
+  $('#magpick').click(heropicked);
+  //makes abilities draggable
+  for (let i = 1; i <= 23; i++) {
+    $('.pick' + i).mousedown(pickupabil);
+  }
+  $('#init-submit').click(checkinitiation);
+  //sets up encounter lockin button
+  $('#encounter-lockin').click(checkencounter);
+  //temp request function
+  $('#howto-button').click(gethvariance);
+});
