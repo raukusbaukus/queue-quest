@@ -97,7 +97,7 @@ function errdisplay() {
 
 function mousefollow() {
   //matches tooltips and errors to mouse coordinates
-  $('#encounterend').css('top', event.pageY);
+  $('#encounterend').css('top', event.pageY - $('#encounterend').height());
   $('#encounterend').css('left', event.pageX - $('#encounterend').width() / 2);
   $('#errholder').css('top', event.pageY - 200);
   $('#errholder').css('left', event.pageX - $('#errholder').width() / 2);
@@ -181,30 +181,53 @@ function setencounter(toggle) {
     for (var mons in monsterarr) {
       if (monsterarr[mons].name === levelarr[gamelevel][encounterlevel]) {
         currmonster = monsterarr[mons];
+        maxmresources();
+        break;
       }
     }
     setmstats();
   } else {
     $('#hud').css('display', 'none');
-    setinitiation('false')
+    setinitiation(false);
     $('#encounter-rounds').css('display', 'none');
   }
 }
 
 function nextencounter() {
   //checks for levelup and increments encounter/game counters
-  if (encounterlevel === levelarr[gamelevel].length - 1) {
-    encounterlevel = 0;
-    gamelevel++;
-    levelup();
-  } else {
-    encounterlevel++;
-    setencounter();
+  clickcount++;
+  if (clickcount > 1) {
+    //clear any encounter stuff
+    for (var f = 0; f <= 5; f++) {
+      $('#h' + f + 'cond').html('');
+      $('#m' + f + 'cond').html('');
+      $('#h' + f + 'out').text('');
+      $('#m' + f + 'out').text('');
+    }
+    $('#encounterend').css('display', 'none');
+    $('body').unbind('mouseup');
+    clickcount = 0;
+    setabilqueue(6, 'hd');
+    if (encounterlevel >= levelarr[gamelevel].length - 1) {
+      encounterlevel = 0;
+      gamelevel++;
+      setlevelup(true);
+    } else {
+      encounterlevel++;
+      setinitiation(true);
+      setencounter(true);
+    }
   }
 }
 
-function levelup() {
-
+function setlevelup(toggle) {
+  if (toggle) {
+    setencounter(false);
+    setinitiation(false);
+    $('#levelup').css('display', 'block');
+  } else {
+    $('#levelup').css('display', 'none');
+  }
 }
 
 function resethero() {
@@ -235,6 +258,7 @@ function addabil(aname) {
       heroinfo['maxward'] += initabilityarr[initabilobjs].bonusward;
       heroinfo['dmgvariance'] += initabilityarr[initabilobjs].bonusvariance;
       heroinfo['basedmg'] += initabilityarr[initabilobjs].bonusbase;
+      break;
     }
   }
   for (let abilobjs in abilityarr) {
@@ -247,6 +271,7 @@ function addabil(aname) {
       heroinfo['maxward'] += abilityarr[abilobjs].bonusward;
       heroinfo['dmgvariance'] += abilityarr[abilobjs].bonusvariance;
       heroinfo['basedmg'] += abilityarr[abilobjs].bonusbase;
+      break;
     }
   }
   sethstats();
@@ -258,6 +283,16 @@ function maxresources() {
   heroinfo['currenergy'] = heroinfo['maxenergy'];
   heroinfo['currarmor'] = heroinfo['maxarmor'];
   heroinfo['currward'] = heroinfo['maxward'];
+  sethstats();
+}
+
+function maxmresources() {
+  //sets all curr monster values to max
+  currmonster['currhp'] = currmonster['maxhp'];
+  currmonster['currenergy'] = currmonster['maxenergy'];
+  currmonster['currarmor'] = currmonster['maxarmor'];
+  currmonster['currward'] = currmonster['maxward'];
+  setmstats();
 }
 
 function sethstats() {
@@ -358,6 +393,7 @@ function checkanalyzed(name) {
   for (let t = 0; t < analyzed.length; t++) {
     if (analyzed[t] === name) {
       analyzebool = true;
+      break;
     }
   }
   if (analyzebool) {
@@ -484,7 +520,7 @@ function checkdrop() {
       if (droparr[c].top < checky && droparr[c + 1].top >= checky) {
         habilarr[c] = heldabil;
         setabilqueue(cc, 'h');
-
+        break;
       }
     }
   }
@@ -508,6 +544,7 @@ function checkinitiation() {
     for (var o = 0; o < initabilityarr.length; o++) {
       if (initabilityarr[o].name === checked) {
         realinit = initabilityarr[o];
+        break;
       }
     }
     if (realinit) {
@@ -515,6 +552,7 @@ function checkinitiation() {
         showerr('That ability costs ' + realinit.energycost + ' energy, but your hero only has ' + heroinfo['currenergy'] + '. Please select a different ability.');
       } else {
         runinitiation(realinit);
+        setinitiation(false);
         setabilityselect(true);
       }
     }
@@ -902,12 +940,15 @@ function runencounter() {
       var func = '';
       if (gameover) {
         //put up game over info
-        title = 'Game Over';
+        title = 'Game Over!';
         msg = 'Oh no, our mighty hero has fallen in battle! However, all is not lost. Click to restart the game with a new hero.';
         func = defeat;
         break;
       } else if (victory) {
         //put up next encounter/level up
+        title = 'Victory!';
+        msg = 'Our brave hero has deftly dispatched this foe, but what greater challenges await? Click to find out!';
+        func = nextencounter;
         break;
       } else if (a === 4) {
         //call for another engagement
@@ -921,15 +962,21 @@ function runencounter() {
 }
 
 function endencounter(title, msg, func) {
-  console.log('called endencounter');
+  //displays end of encounter message and follows up depending on context
+  setabilityselect(false);
+  resetconds();
   $('#endtitle').text(title);
   $('#endmsg').text(msg);
   $('#encounterend').css('display', 'inline');
   $('body').mouseup(func);
 }
 
+function resetconds() {
+  hcondtimer = [0, 0, 0, 0, 0];
+  mcondtimer = [0, 0, 0, 0, 0];
+}
+
 function reengage() {
-  console.log('called reengage');
   //encounter inconclusive, re-engage for another encounter
   clickcount++;
   if (clickcount > 1) {
@@ -944,11 +991,11 @@ function reengage() {
     $('body').unbind('mouseup');
     clickcount = 0;
     setabilqueue(6, 'hd');
+    setinitiation(true);
   }
 }
 
 function defeat() {
-  console.log('defeated');
   clickcount++;
   if (clickcount > 1) {
     //clear any encounter stuff
@@ -962,6 +1009,10 @@ function defeat() {
     $('body').unbind('mouseup');
     clickcount = 0;
     setabilqueue(6, 'hd');
+    setabilityselect(false);
+    setencounter(false);
+    resethero();
+    setwelcome(true);
   }
 }
 
@@ -970,17 +1021,21 @@ function chooselevelup() {
   //increases related tier, grants auto stat bumps, maxs resources, starts next level
   var thisname = this.id.substring(3);
   for (var checkinit in initabilityarr) {
-    if (initabilityarr[checkinit].type === 'Physical') {
+    if (initabilityarr[checkinit].name === thisname && initabilityarr[checkinit].type === 'Physical') {
       heroinfo['phystier'] += 1;
-    } else {
+      break;
+    } else if (initabilityarr[checkinit].name === thisname) {
       heroinfo['magtier'] += 1;
+      break;
     }
   }
   for (var checkabil in abilityarr) {
-    if (abilityarr[checkabil].type === 'Physical') {
+    if (abilityarr[checkabil].name === thisname && abilityarr[checkabil].type === 'Physical') {
       heroinfo['phystier'] += 1;
-    } else {
+      break;
+    } else if (abilityarr[checkabil].name === thisname) {
       heroinfo['magtier'] += 1;
+      break;
     }
   }
   heroinfo['maxhp'] += 3;
@@ -988,6 +1043,8 @@ function chooselevelup() {
   heroinfo['level'] += 1;
   addabil(thisname);
   maxresources();
+  setlevelup(false);
+  setencounter(true);
 }
 
 //
