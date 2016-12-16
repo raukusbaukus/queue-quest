@@ -187,6 +187,7 @@ function addabil(aname) {
       heroinfo['basedmg'] += abilityarr[abilobjs].bonusbase;
     }
   }
+  sethstats();
 }
 
 function maxresources() {
@@ -469,8 +470,8 @@ function checkencounter() {
   if (notready) {
     showerr('Make sure you have an ability queued for each round, then try again.');
   } else {
-    //gethvariance();
-    runencounter();
+    gethvariance();
+    //runencounter();
   }
 }
 
@@ -686,11 +687,11 @@ function runencounter() {
       }
       //determine damage dealt
       if (hrealabils[a].offense) {
-        hvar = Math.ceil(Math.random() * heroinfo['dmgvariance']); // hresultsarr[a]
+        hvar = hresultsarr[a];
         hdealt = Math.round((heroinfo['basedmg'] + hvar) * hrealabils[a].dmgmultiplier);
       }
       if (mrealabils[a].offense) {
-        mvar = Math.ceil(Math.random() * currmonster['dmgvariance']); //// mresultsarr[a]
+        mvar = mresultsarr[a];
         mdealt = Math.round((currmonster['basedmg'] + mvar) * mrealabils[a].dmgmultiplier);
       }
       //determine damage taken
@@ -902,31 +903,28 @@ function defeat() {
 }
 
 function chooselevelup() {
-  //adds the selected init or enc ability to hero's known abilities
+  //adds the selected init or enc ability to hero's known abilities,
+  //increases related tier, grants auto stat bumps, maxs resources, starts next level
   var thisname = this.id.substring(3);
-  console.log(thisname);
   for (var checkinit in initabilityarr) {
-    if (thisname === initabilityarr[checkinit].name) {
-      heroinfo['initabils'].push(thisname);
-      if (initabilityarr[checkinit].type === 'Physical') {
-        heroinfo['phystier'] += 1;
-      } else {
-        heroinfo['magtier'] += 1;
-      }
+    if (initabilityarr[checkinit].type === 'Physical') {
+      heroinfo['phystier'] += 1;
+    } else {
+      heroinfo['magtier'] += 1;
     }
   }
   for (var checkabil in abilityarr) {
-    if (thisname === abilityarr[checkabil].name) {
-      heroinfo['abils'].push(thisname);
-      if (abilityarr[checkabil].type === 'Physical') {
-        heroinfo['phystier'] += 1;
-      } else {
-        heroinfo['magtier'] += 1;
-      }
+    if (abilityarr[checkabil].type === 'Physical') {
+      heroinfo['phystier'] += 1;
+    } else {
+      heroinfo['magtier'] += 1;
     }
   }
-  sethstats();
-  console.log('choosing '+heroinfo['abils']+heroinfo['initabils']);
+  heroinfo['maxhp'] += 3;
+  heroinfo['maxenergy'] += 2;
+  heroinfo['level'] += 1;
+  addabil(thisname);
+  maxresources();
 }
 
 //
@@ -941,7 +939,7 @@ function gethvariance() {
 
 
 function hvarsuccess(data) {
-  //data has returned
+  //hero variance data has returned
   var gotobj = data;
   var hresults = gotobj.details;
   hresults = hresults.slice(2, hresults.length - 2); //trim whitespace and parens
@@ -949,7 +947,6 @@ function hvarsuccess(data) {
   for (var r = 0; r < hresultsarr.length; r++) {
     hresultsarr[r] = parseInt(hresultsarr[r]); //convert to ints
   }
-  console.log(hresultsarr);
   getmvariance();
 }
 
@@ -961,7 +958,7 @@ function getmvariance() {
 }
 
 function mvarsuccess(data) {
-  //data has returned
+  //monster variance data has returned
   var mgotobj = data;
   var mresults = mgotobj.details;
   mresults = mresults.slice(2, mresults.length - 2); //trim whitespace and parens
@@ -969,8 +966,7 @@ function mvarsuccess(data) {
   for (var r = 0; r < mresultsarr.length; r++) {
     mresultsarr[r] = parseInt(mresultsarr[r]); //convert to ints
   }
-  console.log(mresultsarr);
-  //getmvariance();
+  runencounter();
 }
 
 $(document).ready(function(event) {
@@ -985,7 +981,7 @@ $(document).ready(function(event) {
   $('#ranpick').click(heropicked);
   $('#magpick').click(heropicked);
   //makes abilities draggable and level-up abilities chooseable
-  for (var i = 1; i < abilityarr.length-1; i++) {
+  for (var i = 1; i < abilityarr.length - 1; i++) {
     $('.pick' + i).mousedown(pickupabil);
     $('#lev' + abilityarr[i].name).mousedown(chooselevelup);
   }
@@ -997,7 +993,4 @@ $(document).ready(function(event) {
   $('#init-submit').click(checkinitiation);
   //sets up encounter lockin button
   $('#encounter-lockin').click(checkencounter);
-
-  //temp request function
-  $('#howto-button').click(gethvariance);
 });
