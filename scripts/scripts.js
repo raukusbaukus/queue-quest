@@ -901,14 +901,32 @@ function defeat() {
   }
 }
 
-function leveluppop() {
-
-  for (var k in initabilityarr) {
-
-    if (initabilityarr[k]) {
-
+function chooselevelup() {
+  //adds the selected init or enc ability to hero's known abilities
+  var thisname = this.id.substring(3);
+  console.log(thisname);
+  for (var checkinit in initabilityarr) {
+    if (thisname === initabilityarr[checkinit].name) {
+      heroinfo['initabils'].push(thisname);
+      if (initabilityarr[checkinit].type === 'Physical') {
+        heroinfo['phystier'] += 1;
+      } else {
+        heroinfo['magtier'] += 1;
+      }
     }
   }
+  for (var checkabil in abilityarr) {
+    if (thisname === abilityarr[checkabil].name) {
+      heroinfo['abils'].push(thisname);
+      if (abilityarr[checkabil].type === 'Physical') {
+        heroinfo['phystier'] += 1;
+      } else {
+        heroinfo['magtier'] += 1;
+      }
+    }
+  }
+  sethstats();
+  console.log('choosing '+heroinfo['abils']+heroinfo['initabils']);
 }
 
 //
@@ -966,13 +984,20 @@ $(document).ready(function(event) {
   $('#warpick').click(heropicked);
   $('#ranpick').click(heropicked);
   $('#magpick').click(heropicked);
-  //makes abilities draggable
-  for (let i = 1; i <= abilityarr.length; i++) {
+  //makes abilities draggable and level-up abilities chooseable
+  for (var i = 1; i < abilityarr.length-1; i++) {
     $('.pick' + i).mousedown(pickupabil);
+    $('#lev' + abilityarr[i].name).mousedown(chooselevelup);
   }
+  //makes levelup init abilities chooseable
+  for (var u = 1; u < initabilityarr.length; u++) {
+    $('#lev' + initabilityarr[u].name).click(chooselevelup);
+  }
+  //sets up initiation button
   $('#init-submit').click(checkinitiation);
   //sets up encounter lockin button
   $('#encounter-lockin').click(checkencounter);
+
   //temp request function
   $('#howto-button').click(gethvariance);
 });

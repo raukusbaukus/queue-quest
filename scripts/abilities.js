@@ -633,7 +633,7 @@ const abilityarr = [{
   name: 'Silence',
   type: 'Magical',
   icon: 'ra-speech-bubble',
-  tier: 2,
+  tier: 1,
   bonushp: 0,
   bonusenergy: 2,
   bonusarmor: 0,
