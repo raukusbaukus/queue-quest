@@ -1,7 +1,69 @@
 const tooltipinfo = {
-  warpick: "The Warrior has the highest starting HP and Armor. They also begin play with the 'Repair' initiation ability, which lets you repair broken armor.",
-  ranpick: "The Ranger has the highest starting Energy and Damage. They also begin play with the 'Energize' initiation ability, which lets you recover missing energy.",
-  magpick: "The Magi starts with a Ward to mitigate magic damage, and their attacks are considered magic damage, which bypasses armor. They also begin play with the 'Protect' initiation ability, which lets you recharge a diminished ward."
+  "warpick": "The Warrior has the highest starting HP and Armor. They also begin play with the 'Repair' initiation ability, which lets you repair broken armor.",
+  'ranpick': "The Ranger has the highest starting Energy and Damage. They also begin play with the 'Energize' initiation ability, which lets you recover missing energy.",
+  'magpick': "The Magi starts with a Ward to mitigate magic damage, and their attacks are considered magic damage, which bypasses armor. They also begin play with the 'Protect' initiation ability, which lets you recharge a diminished ward.",
+  'lAnalyze': 'Reveals an unknown enemy monsters ability queue',
+  'lEnergize': 'Restores energy',
+  'lExhaust': 'Drains enemy energy',
+  'lHeal': 'Restores HP',
+  'lIntimidate': 'Decreases enemy damage output',
+  'lProtect': 'Restores missing ward',
+  'lRepair': 'Restores missing armor',
+  'lWeaken': 'Decreases enemy damage numbers',
+  'aAttack': 'Default basic attack. Damage depends on hero type.',
+  "aArmor-Break": 'Deals light damage and reduces enemy armor',
+  'aBlock': 'Reduces most incoming physical damage, or partial incoming magic damage.',
+  'aCleanse': 'Removes all conditions. Can be used while silenced.',
+  "aCold-Snap": 'Good magic damage. Removes burning from friend and foe.',
+  'aCombo': 'Good physical damage. Can only be used immediately after Attack',
+  "aCounter-Attack": 'Good physical damage, minor physical mitigation. Only useable after Block',
+  'aCurse': 'Minor magical damage. Cursed enemies reflect some of the damage they deal back on themselves.',
+  'aDodge': 'Completely avoids any damage, armor/ward break, and conditions',
+  'aDoom': 'Magic damage, and applies all conditions.',
+  "aDrain-Life": 'Magic damage that heals the caster.',
+  'aFeint': 'Physical damage that also mitigates incoming physical damage and provides a bonus to your next attack, if physical.',
+  'aFinisher': 'Massive physical damage. Only usable on round 5.',
+  "aFlame-Wave": 'Good magic damage, and burns for more over time. Only useable after Mote of Fire.',
+  "aLightning-Bolt": 'Good magic damage',
+  "aMote-of-Fire": 'Magic damage, applies burning damage over time.',
+  "aOpening-Volley": 'Good and efficient physical damage. Only usable on round 1.',
+  'aOverpower': 'Physical damage. Reduces and reflects incoming magic damage.',
+  "aPiercing-Strike": 'Good physical damage. Ignores armor.',
+   'aSilence': 'Magic damage. Applies silence, which causes enemy magic abilities to fumble.',
+   "aSpell-Break": 'Minor magic damage. Reduces enemy ward.',
+   'aTurn': 'Magic damage. Causes undead and demons to fumble their abilities.',
+   "aVenom-Strike": 'Good physical damage. Applies a poison that does additional damage.',
+   'levAnalyze': 'Reveals an unknown enemy monsters ability queue',
+   'levEnergize': 'Restores energy',
+   'levExhaust': 'Drains enemy energy',
+   'levHeal': 'Restores HP',
+   'levIntimidate': 'Decreases enemy damage output',
+   'levProtect': 'Restores missing ward',
+   'levRepair': 'Restores missing armor',
+   'levWeaken': 'Decreases enemy damage numbers',
+   'levAttack': 'Default basic attack. Damage depends on hero type.',
+   "levArmor-Break": 'Deals light damage and reduces enemy armor',
+   'levBlock': 'Reduces most incoming physical damage, or partial incoming magic damage.',
+   'levCleanse': 'Removes all conditions. Can be used while silenced.',
+   "levCold-Snap": 'Good magic damage. Removes burning from friend and foe.',
+   'levCombo': 'Good physical damage. Can only be used immediately after Attack',
+   "levCounter-Attack": 'Good physical damage, minor physical mitigation. Only useable after Block',
+   'levCurse': 'Minor magical damage. Cursed enemies reflect some of the damage they deal back on themselves.',
+   'levDodge': 'Completely avoids any damage, armor/ward break, and conditions',
+   'levDoom': 'Magic damage, and applies all conditions.',
+   "levDrain-Life": 'Magic damage that heals the caster.',
+   'levFeint': 'Physical damage that also mitigates incoming physical damage and provides a bonus to your next attack, if physical.',
+   'levFinisher': 'Massive physical damage. Only usable on round 5.',
+   "levFlame-Wave": 'Good magic damage, and burns for more over time. Only useable after Mote of Fire.',
+   "levLightning-Bolt": 'Good magic damage',
+   "levMote-of-Fire": 'Magic damage, applies burning damage over time.',
+   "levOpening-Volley": 'Good and efficient physical damage. Only usable on round 1.',
+   'levOverpower': 'Physical damage. Reduces and reflects incoming magic damage.',
+   "levPiercing-Strike": 'Good physical damage. Ignores armor.',
+    'levSilence': 'Magic damage. Applies silence, which causes enemy magic abilities to fumble.',
+    "levSpell-Break": 'Minor magic damage. Reduces enemy ward.',
+    'levTurn': 'Magic damage. Causes undead and demons to fumble their abilities.',
+    "levVenom-Strike": 'Good physical damage. Applies a poison that does additional damage.'
 };
 
 const condarr = [{
@@ -1090,8 +1152,14 @@ function mvarsuccess(data) {
 }
 
 $(document).ready(function(event) {
-  //sets up tooltip
-  tooltiparr = [$('#warpick'), $('#ranpick'), $('#magpick')];
+  //sets up tooltips
+  tooltiparr = [$('#warpick'), $('#ranpick'), $('#magpick'), $('#lAnalyze'), $('#lEnergize'), $('#lExhaust'), $('#lHeal'),
+  $('#lIntimidate'), $('#lProtect'), $('#lRepair'), $('#lWeaken'), $('.ra-medical-pack'), $('aAttack'), $('aArmor-Break'), $('aBlock'), $('aCleanse'), $('aCold-Snap'), $('aCombo'), $('aCounter-Attack'),
+  $('aCurse'), $('aDodge'), $('aDoom'), $('aDrain-Life'), $('aFeint'), $('aFinisher'), $('aFlame-Wave'), $('aLightning-Bolt'), $('aMote-of-Fire'), $('aOpening-Volley'), $('aOverpower'), $('aPiercing-Strike'),
+   $('aSilence'), $('aSpell-Break'), $('aTurn'), $('aVenom-Strike'), $('#lAnalyze'), $('#levEnergize'), $('#levExhaust'), $('#levHeal'),
+   $('#levIntimidate'), $('#levProtect'), $('#levRepair'), $('#levWeaken'), $('#levAttack'), $('#levArmor-Break'), $('#levBlock'), $('#levCleanse'), $('#levCold-Snap'), $('#levCombo'), $('#levCounter-Attack'),
+   $('#levCurse'), $('#levDodge'), $('#levDoom'), $('#levDrain-Life'), $('#levFeint'), $('#levFinisher'), $('#levFlame-Wave'), $('#levLightning-Bolt'), $('#levMote-of-Fire'), $('#levOpening-Volley'), $('#levOverpower'), $('#levPiercing-Strike'),
+    $('#levSilence'), $('#levSpell-Break'), $('#levTurn'), $('#levVenom-Strike')];
   $('body').mousemove(mousefollow);
   for (let id in tooltiparr) {
     tooltiparr[id].mouseenter(showtooltip);
