@@ -48,6 +48,9 @@ var currmonster = {};
 var heroinfo = {
   name: '',
   illus: 'images/characters/magi.gif',
+  level: 1,
+  phystier: 0,
+  magtier: 0,
   maxhp: 30,
   currhp: 30,
   maxenergy: 24,
@@ -74,6 +77,22 @@ function hidetooltip() {
   $('#tooltip').css('display', 'none');
 }
 
+function showerr(str) {
+  //shows passed error text
+  $('#errmessage').text(str);
+  $('#errholder').css('display', 'flex');
+  $('body').click(errdisplay);
+}
+
+function errdisplay() {
+  clickcount++;
+  if (clickcount > 1) {
+    $('#errholder').css('display', 'none');
+    $('body').unbind('click');
+    clickcount = 0;
+  }
+}
+
 function mousefollow() {
   //matches tooltips and errors to mouse coordinates
   $('#encounterend').css('top', event.pageY);
@@ -93,6 +112,7 @@ function heropicked() {
   if (this.id === 'warpick') {
     heroinfo['maxhp'] = 38;
     heroinfo['maxarmor'] = 1.5;
+    heroinfo['phystier'] = 1;
     addabil('Repair');
     addabil('Block');
     addabil('Combo');
@@ -101,6 +121,7 @@ function heropicked() {
     heroinfo['maxenergy'] = 30;
     heroinfo['basedmg'] = 6;
     heroinfo['maxarmor'] = 1.5;
+    heroinfo['phystier'] = 1;
     addabil('Energize');
     addabil('Dodge');
     addabil('Opening-Volley');
@@ -109,6 +130,7 @@ function heropicked() {
     heroinfo['maxhp'] = 27;
     heroinfo['maxenergy'] = 28;
     heroinfo['maxward'] = 1.5;
+    heroinfo['magtier'] = 1;
     addabil('Protect');
     addabil('Lightning-Bolt');
     addabil('Mote-of-Fire');
@@ -127,6 +149,9 @@ function setmonster(monst) {
 function resethero() {
   //resets hero stats to base values
   heroinfo['name'] = 'Hero';
+  heroinfo['level'] = 1;
+  heroinfo['phystier'] = 0;
+  heroinfo['magtier'] = 0;
   heroinfo['initabils'] = ['Analyze', 'Heal'];
   heroinfo['abils'] = ['Attack'];
   heroinfo['dmgvariance'] = 2;
@@ -419,23 +444,6 @@ function checkencounter() {
     runencounter();
   }
 }
-
-function showerr(str) {
-  //shows passed error text
-  $('#errmessage').text(str);
-  $('#errholder').css('display', 'flex');
-  $('body').click(errdisplay);
-}
-
-function errdisplay() {
-  clickcount++;
-  if (clickcount > 1) {
-    $('#errholder').css('display', 'none');
-    $('body').unbind('click');
-    clickcount = 0;
-  }
-}
-
 
 function runinitiation(iabil) {
   //uncheck initiation options
@@ -864,10 +872,22 @@ function defeat() {
   }
 }
 
+function leveluppop() {
+
+  for (var k in initabilityarr) {
+
+    if (initabilityarr[k]) {
+
+    }
+  }
+}
+
+//
+
 function gethvariance() {
   //on success for h, call for m. on success for m, start runencounter
-  var apiurl =  `https://cors-anywhere.herokuapp.com/https://rolz.org/api/?5d${heroinfo['dmgvariance']}.json`;
-  fetch(apiurl).then(res=>res.json()).then(d=>{
+  var apiurl = `https://cors-anywhere.herokuapp.com/https://rolz.org/api/?5d${heroinfo['dmgvariance']}.json`;
+  fetch(apiurl).then(res => res.json()).then(d => {
     hvarsuccess(d);
   });
 }
@@ -887,8 +907,8 @@ function hvarsuccess(data) {
 }
 
 function getmvariance() {
-  var mapiurl =  `https://cors-anywhere.herokuapp.com/https://rolz.org/api/?5d${currmonster['dmgvariance']}.json`;
-  fetch(mapiurl).then(res=>res.json()).then(g=>{
+  var mapiurl = `https://cors-anywhere.herokuapp.com/https://rolz.org/api/?5d${currmonster['dmgvariance']}.json`;
+  fetch(mapiurl).then(res => res.json()).then(g => {
     mvarsuccess(g);
   });
 }
