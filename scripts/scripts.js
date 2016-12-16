@@ -43,6 +43,8 @@ var analyzebool = false;
 var clickcount = 0;
 var initbool = false;
 var mdmgmult = 1;
+var gamelevel = 0;
+var encounterlevel = 0;
 var currmonster = {};
 
 var heroinfo = {
@@ -137,17 +139,76 @@ function heropicked() {
   }
   maxresources();
   sethstats();
-  //temporary monster initialization
-  setmonster(monsterarr[Math.floor(Math.random() * monsterarr.length)]);
+  setwelcome(false);
+  setencounter(true);
 }
 
-function setmonster(monst) {
-  currmonster = monst;
-  setmstats();
+function setwelcome(toggle) {
+  //turns welcome section on and off
+  if (toggle) {
+    $('#welcome').css('display', 'block');
+  } else {
+    $('#welcome').css('display', 'none');
+  }
+}
+
+function setinitiation(toggle) {
+  //turns initiation ability selection on and off
+  if (toggle) {
+    $('#initiation').css('display', 'block');
+  } else {
+    $('#initiation').css('display', 'none');
+  }
+}
+
+function setabilityselect(toggle) {
+  //turns encounter ability selection on and off
+  if (toggle) {
+    $('#ability-select').css('display', 'block');
+  } else {
+    $('#ability-select').css('display', 'none');
+  }
+}
+
+function setencounter(toggle) {
+  //sets up and displays the next monster being encountered
+  //or turns the relevent sections off
+  //do not do this mid-encounter
+  if (toggle) {
+    $('#hud').css('display', 'block');
+    setinitiation(true);
+    $('#encounter-rounds').css('display', 'block');
+    for (var mons in monsterarr) {
+      if (monsterarr[mons].name === levelarr[gamelevel][encounterlevel]) {
+        currmonster = monsterarr[mons];
+      }
+    }
+    setmstats();
+  } else {
+    $('#hud').css('display', 'none');
+    setinitiation('false')
+    $('#encounter-rounds').css('display', 'none');
+  }
+}
+
+function nextencounter() {
+  //checks for levelup and increments encounter/game counters
+  if (encounterlevel === levelarr[gamelevel].length - 1) {
+    encounterlevel = 0;
+    gamelevel++;
+    levelup();
+  } else {
+    encounterlevel++;
+    setencounter();
+  }
+}
+
+function levelup() {
+
 }
 
 function resethero() {
-  //resets hero stats to base values
+  //resets hero stats to base values, and resets game progress
   heroinfo['name'] = 'Hero';
   heroinfo['level'] = 1;
   heroinfo['phystier'] = 0;
@@ -160,6 +221,7 @@ function resethero() {
   heroinfo['maxenergy'] = heroinfo['currenergy'] = 20;
   heroinfo['maxarmor'] = heroinfo['currentarmor'] = 1;
   heroinfo['maxward'] = heroinfo['currentward'] = 0;
+  gamelevel = encounterlevel = 0;
 }
 
 function addabil(aname) {
@@ -453,6 +515,7 @@ function checkinitiation() {
         showerr('That ability costs ' + realinit.energycost + ' energy, but your hero only has ' + heroinfo['currenergy'] + '. Please select a different ability.');
       } else {
         runinitiation(realinit);
+        setabilityselect(true);
       }
     }
   } else {

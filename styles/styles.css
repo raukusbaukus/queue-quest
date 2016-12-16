@@ -35,6 +35,10 @@
     display: flex;
 }
 
+#encounter-rounds, #hud, #initiation, #ability-select, #levelup {
+  display: none;
+}
+
 .illus {
     max-width: 100%;
 }
