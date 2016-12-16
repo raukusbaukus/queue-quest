@@ -104,7 +104,7 @@ body {
     box-shadow: inset -3px -3px 4px rgba(6, 51, 26, 0.6);
 }
 
-.base-dmg, .armor, .ward {
+.base-dmg, .armor, .ward, .hero-level, .dmg-type {
     padding: .1em;
     padding-top: .3em;
 }

@@ -1,7 +1,7 @@
 const tooltipinfo = {
   warpick: "The Warrior has the highest starting HP and Armor. They also begin play with the 'Repair' initiation ability, which lets you repair broken armor.",
   ranpick: "The Ranger has the highest starting Energy and Damage. They also begin play with the 'Energize' initiation ability, which lets you recover missing energy.",
-  magpick: "The Magi's starts with a Ward to mitigate magic damage, and their attacks are considered magic damage, which bypasses armor. They also begin play with the 'Protect' initiation ability, which lets you recharge a diminished ward."
+  magpick: "The Magi starts with a Ward to mitigate magic damage, and their attacks are considered magic damage, which bypasses armor. They also begin play with the 'Protect' initiation ability, which lets you recharge a diminished ward."
 };
 
 const condarr = [{
@@ -205,6 +205,7 @@ function sethstats() {
   $('#hhpbar').prop('style', `width: ${Math.floor(100*(heroinfo['currhp']/heroinfo['maxhp']))}%`)
   $('#henergy').text(`Energy: ${heroinfo['currenergy']}/${heroinfo['maxenergy']}`);
   $('#henergybar').prop('style', `width: ${Math.floor(100*(heroinfo['currenergy']/heroinfo['maxenergy']))}%`)
+  $('#hlevel').text(`Level: ${heroinfo['level']}`);
   $('#hdmg').text(`Damage: ${heroinfo['basedmg']}+1d${heroinfo['dmgvariance']}`);
   $('#htype').text(`Type: ${heroinfo['dtype']}`);
   if (heroinfo['maxarmor'] === heroinfo['currarmor']) {
@@ -231,6 +232,34 @@ function sethstats() {
       if (heroinfo['abils'][abils] === abilityarr[abilobjs].name) {
         $('#a' + abilityarr[abilobjs].name).css('display', 'inline');
       }
+    }
+  }
+  //hides ineligible level up init abilities
+  for (let levs in initabilityarr) {
+    $('#lev' + initabilityarr[levs].name).css('display', 'inline');
+    for (let kinits in heroinfo['initabils']) {
+      if (initabilityarr[levs].name === heroinfo['initabils'][kinits]) {
+        $('#lev' + initabilityarr[levs].name).css('display', 'none');
+      }
+    }
+    if (initabilityarr[levs].type === 'Magical' && initabilityarr[levs].tier > heroinfo['magtier']) {
+      $('#lev' + initabilityarr[levs].name).css('display', 'none');
+    } else if (initabilityarr[levs].type === 'Physical' && initabilityarr[levs].tier > heroinfo['phystier']) {
+      $('#lev' + initabilityarr[levs].name).css('display', 'none');
+    }
+  }
+  //hides ineligible level up enc abilities
+  for (let alevs in abilityarr) {
+    $('#lev' + abilityarr[alevs].name).css('display', 'inline');
+    for (let kabils in heroinfo['abils']) {
+      if (abilityarr[alevs].name === heroinfo['abils'][kabils]) {
+        $('#lev' + abilityarr[alevs].name).css('display', 'none');
+      }
+    }
+    if (abilityarr[alevs].type === 'Magical' && abilityarr[alevs].tier > heroinfo['magtier']) {
+      $('#lev' + abilityarr[alevs].name).css('display', 'none');
+    } else if (abilityarr[alevs].type === 'Physical' && abilityarr[alevs].tier > heroinfo['phystier']) {
+      $('#lev' + abilityarr[alevs].name).css('display', 'none');
     }
   }
 }
@@ -938,7 +967,7 @@ $(document).ready(function(event) {
   $('#ranpick').click(heropicked);
   $('#magpick').click(heropicked);
   //makes abilities draggable
-  for (let i = 1; i <= 23; i++) {
+  for (let i = 1; i <= abilityarr.length; i++) {
     $('.pick' + i).mousedown(pickupabil);
   }
   $('#init-submit').click(checkinitiation);
